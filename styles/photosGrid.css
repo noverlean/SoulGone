@@ -1,0 +1,126 @@
+.images
+{
+    width: 270px;
+    height: 125px;
+    border-radius: 18px;
+    margin-top: 15px;
+    display: grid;
+    gap: 5px;
+}
+
+/* ==================================================== */
+.onePhotoGrid
+{
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+}
+.onePhotoGrid .photo1
+{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+/* ---------------------------------------------------- */
+.twoPhotosGrid
+{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+}
+.twoPhotosGrid .photo1
+{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.twoPhotosGrid .photo2
+{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+/* ---------------------------------------------------- */
+.threePhotosGrid
+{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+.threePhotosGrid .photo1
+{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+.threePhotosGrid .photo2
+{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.threePhotosGrid .photo3
+{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+/* ---------------------------------------------------- */
+.fourPhotosGrid
+{
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+.fourPhotosGrid .photo1
+{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.fourPhotosGrid .photo2
+{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+.fourPhotosGrid .photo3
+{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.fourPhotosGrid .photo4
+{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+/* ==================================================== */
+
+.photo
+{
+    border-radius: 15px;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.addPhoto
+{
+    background-color: gray;
+    background-size: 75%;
+    background-repeat: no-repeat;
+    background-image: url('resources/icons/add.svg');
+}
+.emptyPhoto
+{
+    background-color: rgb(192, 192, 192);
+}

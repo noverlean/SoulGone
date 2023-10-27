@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/account.css">
+    <link rel="stylesheet" href="styles/photosGrid.css">
+    <link rel="stylesheet" href="styles/animations.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> 
+    <!-- font-family: 'Nunito', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <!-- font-family: 'Rubik', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
+    <!-- font-family: 'Forum', cursive; -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant&display=swap" rel="stylesheet">
+    <!-- font-family: 'Cormorant Infant', serif; -->
+
+    <title>Document</title>
+</head>
+<body>
+    <main id="main">
+        <div class="bunner" id="bunner"><div class="newBanner" id="newBanner"></div></div>
+
+        <div class="accountOpenCloseButton" id="accountOpenCloseButton">
+            <div class="accountOpenCloseFiller" id="accountOpenCloseFiller"></div>
+        </div>
+
+        <!-- <div class="profileCard" id="profileCard"></div> -->
+        <button class="choiceBtn likeBtn" id="like"></button>
+        <button class="choiceBtn skipBtn" id="cross"></button>
+        
+        <!-- ----------------------------------------- -->
+        <div class="leftBar" id="leftBar">
+            <div class="defaultBarContainer tags" id="leftTags">
+                <div class="tag">Общение</div>
+                <div class="tag">Животные</div>
+                <div class="addTag" id="addTag"><img src="resources/icons/addWhite.png"></div>
+            </div>
+        </div>   
+        <!-- ----------------------------------------- -->
+        <div style="width: 600px; height: 100vh;"></div> 
+        <!-- ----------------------------------------- -->
+        <div class="rightBar" id="rightBar">
+            <div class="defaultBarContainer avatarLoader" id="avatarLoader">
+                <div class="avatar" id="avatar">
+                    <input type="file" class="avatarLoaderInput" onchange="readURL(this);" accept=".jpeg, .png">
+                </div>
+            </div>
+            <div class="defaultBarContainer nameEdit" id="nameEdit">
+                <input type="text" class="nameEditInput" name="" id="nameEditInput" maxlength="12" minlength="2">
+            </div>
+            <div style="display: none; flex-direction: row;" id="ageDescriptionEdit" class="ageDescriptionEdit">
+                <div class="defaultBarContainer ageEditContainer" id="ageEdit">
+                    <input type="text" class="nameEditInput" id="ageEditInput" maxlength="2" minlength="1">
+                </div>
+                <div class="defaultBarContainer descriptionEditContainer" id="descriptionEdit">
+                    <textarea  type="text" class="nameEditInput" id="descriptionEditInput" maxlength="24" minlength="1" cols="12"></textarea>
+                </div>
+            </div>
+        
+            <div class="defaultBarContainer imageEdit" id="imageEdit">
+                <input type="file" class="imageEditInput" id="imageEditInput1">
+                <input type="file" class="imageEditInput" id="imageEditInput2">
+                <input type="file" class="imageEditInput" id="imageEditInput3">
+                <input type="file" class="imageEditInput" id="imageEditInput4">
+            </div>
+
+            <div class="defaultBarContainer linkEdit" id="linkEdit">
+                <div><img src="resources/icons/instagram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditInstagram" minlength="1"></div>
+                <div><img src="resources/icons/telegram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTelegram" minlength="1"></div>
+                <div><img src="resources/icons/vk.svg" alt=""><input type="text" class="linkEditInput" id="linkEditVK" minlength="1"></div>
+                <div><img src="resources/icons/twitter.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTwitter" minlength="1"></div>
+            </div>
+
+            <div class="defaultBarContainer tags" id="rightTags">
+                <div class="tag">Общение</div>
+                <div class="tag">Животные</div>
+            </div>
+        </div>
+        <!-- ----------------------------------------- -->    
+        <div class="tagAddPanelBackground">
+            <div class="defaultBarContainer tagSearch" id="">
+                <input type="text" class="nameEditInput tagSearchInput" name="" id="" maxlength="12" minlength="2">
+            </div>
+            <div class="defaultBarContainer tagAddListContainer" id="">
+                <div class="tagAddListBlock"><p>Цели</p>
+                    <div class="tag">Отношения</div>
+                    <div class="tag">Общение</div>
+                    <div class="tag">Свободные отношения</div>
+                </div>
+                <div class="tagAddListSlicer"></div>
+                <div class="tagAddListBlock"><p>Цели</p>
+                    <div class="tag">Отношения</div>
+                    <div class="tag">Общение</div>
+                    <div class="tag">Свободные отношения</div>
+                </div>
+                <div class="tagAddListSlicer"></div>
+                <div class="tagAddListBlock"><p>Цели</p>
+                    <div class="tag">Отношения</div>
+                    <div class="tag">Общение</div>
+                    <div class="tag">Свободные отношения</div>
+                </div>
+                <div class="tagAddListSlicer"></div>
+                <div class="tagAddListBlock"><p>Цели</p>
+                    <div class="tag">Отношения</div>
+                    <div class="tag">Общение</div>
+                    <div class="tag">Свободные отношения</div>
+                </div>
+                <div class="tagAddListSlicer"></div>
+                <div class="tagAddListBlock"><p>Цели</p>
+                    <div class="tag">Отношения</div>
+                    <div class="tag">Общение</div>
+                    <div class="tag">Свободные отношения</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="temp/content.js"></script>
+    <script src="temp/selfProfile.js"></script>
+
+    <script src="js/account.js"></script>
+    <script src="js/choicer.js"></script>
+    <script src="js/changeAccountData.js"></script>
+</body>
+</html>
