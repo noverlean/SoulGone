@@ -2,8 +2,6 @@ document.getElementById('nameEditInput').addEventListener(          'change', ()
 document.getElementById('ageEditInput').addEventListener(           'change', () => {EditAccountInput('ageEditInput',           'age',          false)});
 document.getElementById('descriptionEditInput').addEventListener(   'change', () => {EditAccountInput('descriptionEditInput',   'description',  false)});
 
-document.getElementById('addTag').addEventListener('click', () => {});
-
 let linkEditInstagramInput  = document.getElementById('linkEditInstagram');
 let linkEditTelegramInput   = document.getElementById('linkEditTelegram');
 let linkEditVKInput         = document.getElementById('linkEditVK');
@@ -176,4 +174,108 @@ function ChangeInputColor(element, value)
             element.style.backgroundColor = 'white'
             break;
     }
+}
+
+var tagPanelVisibility = false;
+function OpenTagPanel()
+{
+    document.getElementById('tagAddPanelBackground').style.visibility = tagPanelVisibility ? 'hidden' : 'visible';
+    tagPanelVisibility = !tagPanelVisibility;
+}
+
+function SearchTag()
+{
+    let context = document.getElementById('tagSearchInput').value;
+
+    if (context == "")
+    {
+        FillTagAddPanel();
+        return;
+    }
+
+    document.getElementById('tagAddListContainer').innerHTML = "";
+
+    for (let i = 0; i < tags.length; i++)
+    {
+        if (tags[i].category.toLowerCase().includes(context.toLowerCase()))
+        {
+            document.getElementById('tagAddListContainer').insertAdjacentHTML(
+                `afterbegin`,
+                `<div id="` + tags[i].category + `" class="tagAddListBlock"><p>` + tags[i].category + `</p></div>` +
+                `<div class="tagAddListSlicer"></div>`
+            );
+
+            for (let k = 0; k < tags[i].tags.length; k++)
+            {
+                document.getElementById(tags[i].category).insertAdjacentHTML(
+                    `beforeend`,
+                    `<div class="tag">` + tags[i].tags[k] + `</div>`
+                );
+            }
+        }
+
+        for (let k = 0; k < tags[i].tags.length; k++)
+        {
+            if (tags[i].tags[k].toLowerCase().includes(context.toLowerCase()))
+            {
+                document.getElementById('tagAddListContainer').insertAdjacentHTML(
+                    `beforeend`,
+                    `<div class="tag">` + tags[i].tags[k] + `</div>`
+                );
+            }
+        }
+    } 
+
+    // let positions = findAllOccurrences(document.getElementById('tagAddListContainer').innerHTML.toLowerCase(), context.toLowerCase());
+    // console.log(positions);
+
+    // for (let i = 0; i < positions.length; i++)
+    // {
+    //     document.getElementById('tagAddListContainer').innerHTML = insertSubStr(document.getElementById('tagAddListContainer').innerHTML, '<span style="background-color: salmon">', positions[i]);
+    //     document.getElementById('tagAddListContainer').innerHTML = insertSubStr(document.getElementById('tagAddListContainer').innerHTML, '</span>', positions[i] + context.length);
+    // }
+}
+
+FillTagAddPanel();
+function FillTagAddPanel()
+{
+    document.getElementById('tagAddListContainer').innerHTML = "";
+
+    for (let i = 0; i < tags.length; i++)
+    {
+        document.getElementById('tagAddListContainer').insertAdjacentHTML(
+            `afterbegin`,
+            `<div id="` + tags[i].category + `" class="tagAddListBlock"><p>` + tags[i].category + `</p></div>`
+        );
+        if (i != tags.length - 1)
+            document.getElementById('tagAddListContainer').insertAdjacentHTML(
+                `afterbegin`,
+                `<div class="tagAddListSlicer"></div>`
+            );
+
+        for (let k = 0; k < tags[i].tags.length; k++)
+        {
+            document.getElementById(tags[i].category).insertAdjacentHTML(
+                `beforeend`,
+                `<div class="tag">` + tags[i].tags[k] + `</div>`
+            );
+        }
+    }    
+}
+console.log(document.getElementById('tagAddListContainer').textContent);
+
+function findAllOccurrences(str, subStr) {
+    let positions = [];
+    let pos = str.indexOf(subStr);
+
+    while (pos !== -1) {
+        positions.push(pos);
+        pos = str.indexOf(subStr, pos + 1);
+    }
+
+    return positions;
+}
+
+function insertSubStr(str, subStr, pos) {
+    return str.slice(0, pos) + subStr + str.slice(pos);
 }

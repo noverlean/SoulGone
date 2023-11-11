@@ -35,7 +35,7 @@
             <div class="defaultBarContainer tags" id="leftTags">
                 <div class="tag">Общение</div>
                 <div class="tag">Животные</div>
-                <div class="addTag" id="addTag"><img src="resources/icons/addWhite.png"></div>
+                <div class="addTag" id="addTag" onclick="OpenTagPanel()"><img src="resources/icons/addWhite.png"></div>
             </div>
         </div>   
         <!-- ----------------------------------------- -->
@@ -79,46 +79,24 @@
             </div>
         </div>
         <!-- ----------------------------------------- -->    
-        <div class="tagAddPanelBackground">
-            <div class="defaultBarContainer tagSearch" id="">
-                <input type="text" class="nameEditInput tagSearchInput" name="" id="" maxlength="12" minlength="2">
+        <div id="tagAddPanelBackground" class="tagAddPanelBackground"  onclick="OpenTagPanel()">
+            <div class="defaultBarContainer tagSearch" id="" onclick="event.stopPropagation()">
+                <input type="text" class="nameEditInput tagSearchInput" name="" id="tagSearchInput" oninput="SearchTag()" maxlength="12" minlength="2" placeholder="Название тега">
             </div>
-            <div class="defaultBarContainer tagAddListContainer" id="">
+            <div class="defaultBarContainer tagAddListContainer" id="tagAddListContainer" onclick="event.stopPropagation()">
+                <!-- <div class="tagAddListSlicer"></div>
                 <div class="tagAddListBlock"><p>Цели</p>
                     <div class="tag">Отношения</div>
                     <div class="tag">Общение</div>
                     <div class="tag">Свободные отношения</div>
-                </div>
-                <div class="tagAddListSlicer"></div>
-                <div class="tagAddListBlock"><p>Цели</p>
-                    <div class="tag">Отношения</div>
-                    <div class="tag">Общение</div>
-                    <div class="tag">Свободные отношения</div>
-                </div>
-                <div class="tagAddListSlicer"></div>
-                <div class="tagAddListBlock"><p>Цели</p>
-                    <div class="tag">Отношения</div>
-                    <div class="tag">Общение</div>
-                    <div class="tag">Свободные отношения</div>
-                </div>
-                <div class="tagAddListSlicer"></div>
-                <div class="tagAddListBlock"><p>Цели</p>
-                    <div class="tag">Отношения</div>
-                    <div class="tag">Общение</div>
-                    <div class="tag">Свободные отношения</div>
-                </div>
-                <div class="tagAddListSlicer"></div>
-                <div class="tagAddListBlock"><p>Цели</p>
-                    <div class="tag">Отношения</div>
-                    <div class="tag">Общение</div>
-                    <div class="tag">Свободные отношения</div>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>
     
     <script src="temp/content.js"></script>
     <script src="temp/selfProfile.js"></script>
+    <script src="temp/tags.js"></script>
 
     <script src="js/account.js"></script>
     <script src="js/choicer.js"></script>
