@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="styles/account.css">
     <link rel="stylesheet" href="styles/photosGrid.css">
     <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/helpWindowOnHovering.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> 
     <!-- font-family: 'Nunito', sans-serif; -->
@@ -32,10 +33,8 @@
         
         <!-- ----------------------------------------- -->
         <div class="leftBar" id="leftBar">
-            <div class="defaultBarContainer tags" id="leftTags">
-                <div class="tag">Общение</div>
-                <div class="tag">Животные</div>
-                <div class="addTag" id="addTag" onclick="OpenTagPanel()"><img src="resources/icons/addWhite.png"></div>
+            <div class="defaultBarContainer tags tagCaption leftTags" id="leftTags">
+                <div class="addTag" id="addTag" onclick="OpenTagPanel()" data-tooltip="Для более точной настройки интересов нажмите на тег и выберите степень свою заинтересованности от 0 до 10"><img src="resources/icons/addWhite.png"></div>
             </div>
         </div>   
         <!-- ----------------------------------------- -->
@@ -73,10 +72,7 @@
                 <div><img src="resources/icons/twitter.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTwitter" minlength="1"></div>
             </div>
 
-            <div class="defaultBarContainer tags" id="rightTags">
-                <div class="tag">Общение</div>
-                <div class="tag">Животные</div>
-            </div>
+            <div class="defaultBarContainer tags" id="rightTags"></div>
         </div>
         <!-- ----------------------------------------- -->    
         <div id="tagAddPanelBackground" class="tagAddPanelBackground"  onclick="OpenTagPanel()">

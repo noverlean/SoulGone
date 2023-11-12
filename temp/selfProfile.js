@@ -1,5 +1,6 @@
 var selfProfile = 
 `{
+    "id": 123,
     "avatar": "resources/images/avatar.png",
     "name": "Евгений",
     "age": 18,
@@ -11,6 +12,11 @@ var selfProfile =
         "resources/images/1.jpg",
         "resources/images/2.jfif",
         "resources/images/3.jfif"
+    ],
+    "tags": 
+    [
+        ["Общение", "9"],
+        ["Животные", "3"]
     ],
     "instagram": "https://www.instagram.com/nover_lin/",
     "telegram": "https://t.me/noverlin",

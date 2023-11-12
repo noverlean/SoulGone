@@ -278,19 +278,32 @@ main
     height: auto;
     background-color: #e4e4e4;
     padding: 5px;
+    padding-top: 7px;
     margin: 3px;
     border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 .addTag
 {
-    display: inline-block;
     width: 26px;
     height: 26px;
     text-align: center;
     background-color: #e9e9e9;
     padding: 5px;
-    margin: 3px;
     border-radius: 12px;
+    cursor: pointer;
+}
+.tagCaption
+{
+    display: table-caption !important;
+}
+.leftTags
+{
+    max-width: 300px;
+    height: auto;
+    overflow: visible;
+    display: block !important;
 }
 
 .defaultBarContainer
@@ -445,7 +458,7 @@ textarea
     visibility: visible;
     width: 100%;
     height: 100vh;
-    background-color: #00000083;
+    background-color: #000000b0;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -459,7 +472,7 @@ textarea
 {
     width: 280px;
     padding: 15px;
-    max-height: 350px;
+    max-height: 400px;
     overflow-y: scroll;
     height: 100%;
 }

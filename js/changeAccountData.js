@@ -209,7 +209,7 @@ function SearchTag()
             {
                 document.getElementById(tags[i].category).insertAdjacentHTML(
                     `beforeend`,
-                    `<div class="tag">` + tags[i].tags[k] + `</div>`
+                    `<div class="tag" onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
                 );
             }
         }
@@ -218,22 +218,20 @@ function SearchTag()
         {
             if (tags[i].tags[k].toLowerCase().includes(context.toLowerCase()))
             {
+                let myTagStyle = '';            
+
+                if (IndexOfTag(tags[i].tags[k]) != -1)
+                {
+                    myTagStyle = 'style="background-color: ' + LightenDarkenColor(JSON.parse(selfProfile).color, 50) + ' !important;"';
+                }
+
                 document.getElementById('tagAddListContainer').insertAdjacentHTML(
                     `beforeend`,
-                    `<div class="tag">` + tags[i].tags[k] + `</div>`
+                    `<div class="tag" ` + myTagStyle + ` onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
                 );
             }
         }
     } 
-
-    // let positions = findAllOccurrences(document.getElementById('tagAddListContainer').innerHTML.toLowerCase(), context.toLowerCase());
-    // console.log(positions);
-
-    // for (let i = 0; i < positions.length; i++)
-    // {
-    //     document.getElementById('tagAddListContainer').innerHTML = insertSubStr(document.getElementById('tagAddListContainer').innerHTML, '<span style="background-color: salmon">', positions[i]);
-    //     document.getElementById('tagAddListContainer').innerHTML = insertSubStr(document.getElementById('tagAddListContainer').innerHTML, '</span>', positions[i] + context.length);
-    // }
 }
 
 FillTagAddPanel();
@@ -255,27 +253,59 @@ function FillTagAddPanel()
 
         for (let k = 0; k < tags[i].tags.length; k++)
         {
+            let myTagStyle = '';            
+
+            if (IndexOfTag(tags[i].tags[k]) != -1)
+            {
+                myTagStyle = 'style="background-color: ' + LightenDarkenColor(JSON.parse(selfProfile).color, 50) + ' !important;"';
+            }
+
             document.getElementById(tags[i].category).insertAdjacentHTML(
                 `beforeend`,
-                `<div class="tag">` + tags[i].tags[k] + `</div>`
+                `<div class="tag" ` + myTagStyle + `onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
             );
         }
     }    
 }
-console.log(document.getElementById('tagAddListContainer').textContent);
 
-function findAllOccurrences(str, subStr) {
-    let positions = [];
-    let pos = str.indexOf(subStr);
+function AddAndRemoveTagToMyTags(tagName)
+{
+    let _profile = JSON.parse(selfProfile);
+    let index = IndexOfTag(tagName);
 
-    while (pos !== -1) {
-        positions.push(pos);
-        pos = str.indexOf(subStr, pos + 1);
+    if (index == -1)
+    {
+        _profile.tags.push([tagName, 5]);
+    }
+    else
+    {
+        _profile.tags.splice(index, 1);
     }
 
-    return positions;
+    selfProfile = JSON.stringify(_profile);
+    FillTagAddPanel();
+    AddTagsToContainer(_profile);
 }
 
-function insertSubStr(str, subStr, pos) {
-    return str.slice(0, pos) + subStr + str.slice(pos);
+function IndexOfTag(tagName)
+{
+    let index = -1;
+    let _profile = JSON.parse(selfProfile);
+
+    for (let i = 0; i < _profile.tags.length; i++)
+    {
+        if (_profile.tags[i][0] == tagName)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    return index;
+}
+
+function SetInterestValue(tagName, existValue)
+{
+    console.log(tagName);
+    console.log(existValue);
 }

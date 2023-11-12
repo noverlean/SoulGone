@@ -26,7 +26,6 @@ function MakeChoice(choice)
     setTimeout(()=>
     {
         let profileCard = document.getElementById('profileCard');
-        console.log(profileCard.children.length);
 
         let len = profileCard.children.length;
         for (let i = 0; i < len; i++)
@@ -107,7 +106,6 @@ function FillContent(json)
     let profile = JSON.parse(json);
 
     [profile.age, profile.distance, profile.status] = GetPreficses(profile);
-    console.log(profile.age);
 
     document.getElementById('avatar').style.backgroundImage = "url('" + profile.avatar + "')";
     document.getElementById('name').innerHTML               = profile.name;
@@ -119,48 +117,11 @@ function FillContent(json)
     document.getElementById('newBanner').style.backgroundImage = "url('" + profile.avatar + "')";
     ShowNewBanner(profile.avatar);
 
-    document.getElementById('images').classList.add(GetPhotoClassName(profile.images));
+    LoadImages(profile);
 
-    let counter = 0;
-    profile.images.forEach(element => {
-        counter++;
+    LoadMediaButtons(profile);
 
-        if (element != "")
-        {
-            document.getElementById('images').insertAdjacentHTML(
-                `beforeend`,
-                `<div class="photo photo` + counter + `" id="` + element + counter + `"></div>`
-            );
-        }
-
-        document.getElementById(element + counter).style.backgroundImage = "url('" + element + "')";
-    });
-
-    let instagramState =    profile.instagram   != "" ? `Enabled` : `Disabled`;
-    let twitterState =      profile.twitter     != "" ? `Enabled` : `Disabled`;
-    let telegramState =     profile.telegram    != "" ? `Enabled` : `Disabled`;
-    let vkState =           profile.vk          != "" ? `Enabled` : `Disabled`;    
-    let instagramLink =     profile.instagram   != "" ? `href="` + profile.instagram + `"` : `#`;
-    let twitterLink =       profile.twitter     != "" ? `href="` + profile.twitter + `"` : `#`;
-    let telegramLink =      profile.telegram    != "" ? `href="` + profile.telegram + `"` : `#`;
-    let vkLink =            profile.vk          != "" ? `href="` + profile.vk + `"` : `#`;  
-    document.getElementById('media').innerHTML = "";
-    document.getElementById('media').insertAdjacentHTML(
-        `beforeend`,
-        `<a ` + instagramLink + ` id="instagramLink" class="mediaButton instagram` + instagramState + `" target="_blank"></a>`
-    );
-    document.getElementById('media').insertAdjacentHTML(
-        `beforeend`,
-        `<a ` + telegramLink + ` id="telegramLink" class="mediaButton telegram` + telegramState + `" target="_blank"></a>`
-    );
-    document.getElementById('media').insertAdjacentHTML(
-        `beforeend`,
-        `<a ` + vkLink + `  id="vkLink" class="mediaButton vk` + vkState + `" target="_blank"></a>`
-    );
-    document.getElementById('media').insertAdjacentHTML(
-        `beforeend`,
-        `<a ` + twitterLink + ` id="twitterLink" class="mediaButton twitter` + twitterState + `" target="_blank"></a>`
-    );
+    AddTagsToContainer(profile);
 
     ColorizeByTag("accountOpenCloseFiller", profile.color);
     ColorizeByTag("main", profile.color);
@@ -209,7 +170,7 @@ function GetPhotoClassName(images)
 
 function ColorizeByTag(tag, color)
 {
-    let previousProfileBtnFillerColor = document.getElementById(tag).style.backgroundColor
+    let previousProfileBtnFillerColor = document.getElementById(tag).style.backgroundColor;
     document.getElementById(tag).animate(
         [
             { backgroundColor: previousProfileBtnFillerColor },
@@ -226,8 +187,8 @@ function ColorizeByTag(tag, color)
 function ColorizeAllBordersByTag(tag, color)
 {
     let tagArray = document.getElementsByClassName(tag);
-    let previousProfileBtnFillerColor = tagArray[0].style.borderColor
-    console.log(tagArray);
+    let previousProfileBtnFillerColor = tagArray[0].style.borderColor;
+    
     for (let i = 0; i < tagArray.length; i++)
     {
         tagArray[i].animate(
@@ -283,4 +244,69 @@ function LightenDarkenColor(col, amt) {
         result = "0" + result;
 
     return (usePound?"#":"") + result;  
+}
+
+function LoadImages(profile)
+{
+    document.getElementById('images').classList.add(GetPhotoClassName(profile.images));
+
+    let counter = 0;
+    profile.images.forEach(element => {
+        counter++;
+
+        if (element != "")
+        {
+            document.getElementById('images').insertAdjacentHTML(
+                `beforeend`,
+                `<div class="photo photo` + counter + `" id="` + element + counter + `"></div>`
+            );
+        }
+
+        document.getElementById(element + counter).style.backgroundImage = "url('" + element + "')";
+    });
+}
+
+function AddTagsToContainer(profile)
+{
+    let tagsSide = profile.id == JSON.parse(selfProfile).id ? "leftTags" : "rightTags";
+    console.log(profile);
+
+    document.querySelectorAll('.intoTagContainer').forEach(element => element.remove());
+
+    for (let i = 0; i < profile.tags.length; i++)
+    {
+        document.getElementById(tagsSide).insertAdjacentHTML(
+            `afterbegin`,
+            `<div class="tag intoTagContainer" onclick="SetInterestValue('` + profile.tags[i][0] + `', ` + profile.tags[i][1] + `)">` + profile.tags[i][0] + ` | ` + profile.tags[i][1] + `</div>`
+        );
+    }
+}
+
+function LoadMediaButtons(profile)
+{
+    let instagramState =    profile.instagram   != "" ? `Enabled` : `Disabled`;
+    let twitterState =      profile.twitter     != "" ? `Enabled` : `Disabled`;
+    let telegramState =     profile.telegram    != "" ? `Enabled` : `Disabled`;
+    let vkState =           profile.vk          != "" ? `Enabled` : `Disabled`;    
+    let instagramLink =     profile.instagram   != "" ? `href="` + profile.instagram + `"` : `#`;
+    let twitterLink =       profile.twitter     != "" ? `href="` + profile.twitter + `"` : `#`;
+    let telegramLink =      profile.telegram    != "" ? `href="` + profile.telegram + `"` : `#`;
+    let vkLink =            profile.vk          != "" ? `href="` + profile.vk + `"` : `#`;  
+    document.getElementById('media').innerHTML = "";
+    document.getElementById('media').insertAdjacentHTML(
+        `beforeend`,
+        `<a ` + instagramLink + ` id="instagramLink" class="mediaButton instagram` + instagramState + `" target="_blank"></a>`
+    );
+    document.getElementById('media').insertAdjacentHTML(
+        `beforeend`,
+        `<a ` + telegramLink + ` id="telegramLink" class="mediaButton telegram` + telegramState + `" target="_blank"></a>`
+    );
+    document.getElementById('media').insertAdjacentHTML(
+        `beforeend`,
+        `<a ` + vkLink + `  id="vkLink" class="mediaButton vk` + vkState + `" target="_blank"></a>`
+    );
+    document.getElementById('media').insertAdjacentHTML(
+        `beforeend`,
+        `<a ` + twitterLink + ` id="twitterLink" class="mediaButton twitter` + twitterState + `" target="_blank"></a>`
+    );
 }
