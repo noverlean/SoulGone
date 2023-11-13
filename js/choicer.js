@@ -277,7 +277,7 @@ function AddTagsToContainer(profile)
     {
         document.getElementById(tagsSide).insertAdjacentHTML(
             `afterbegin`,
-            `<div class="tag intoTagContainer" onclick="SetInterestValue('` + profile.tags[i][0] + `', ` + profile.tags[i][1] + `)">` + profile.tags[i][0] + ` | ` + profile.tags[i][1] + `</div>`
+            `<div class="tag intoTagContainer" onclick="OpenInterestValueSetter('` + profile.tags[i][0] + `', ` + profile.tags[i][1] + `)">` + profile.tags[i][0] + ` | ` + profile.tags[i][1] + `</div>`
         );
     }
 }

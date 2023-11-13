@@ -304,8 +304,44 @@ function IndexOfTag(tagName)
     return index;
 }
 
-function SetInterestValue(tagName, existValue)
+function OpenInterestValueSetter(tagName, existValue)
 {
-    console.log(tagName);
-    console.log(existValue);
+    document.body.insertAdjacentHTML(
+        `beforeend`,
+        `<div id="tagValueOverlayBackground" class="tagValueOverlayBackground" onclick="ClosetagValueOverlay()">
+            <div id="tagValueOverlay" class="tagValueOverlay" onclick="event.stopPropagation()">
+                <div id="tagValues10" class="tagValues" onclick="SetInterestValue('${tagName}', 10)">10</div>
+                <div id="tagValues9" class="tagValues" onclick="SetInterestValue('${tagName}', 9)">9</div>
+                <div id="tagValues8" class="tagValues" onclick="SetInterestValue('${tagName}', 8)">8</div>
+                <div id="tagValues7" class="tagValues" onclick="SetInterestValue('${tagName}', 7)">7</div>
+                <div id="tagValues6" class="tagValues" onclick="SetInterestValue('${tagName}', 6)">6</div>
+                <div id="tagValues5" class="tagValues" onclick="SetInterestValue('${tagName}', 5)">5</div>
+                <div id="tagValues4" class="tagValues" onclick="SetInterestValue('${tagName}', 4)">4</div>
+                <div id="tagValues3" class="tagValues" onclick="SetInterestValue('${tagName}', 3)">3</div>
+                <div id="tagValues2" class="tagValues" onclick="SetInterestValue('${tagName}', 2)">2</div>
+                <div id="tagValues1" class="tagValues" onclick="SetInterestValue('${tagName}', 1)">1</div>
+            </div>
+        </div>`
+    );
+
+    document.getElementById("tagValues" + existValue).style.backgroundColor = LightenDarkenColor(JSON.parse(selfProfile).color, 50);
+
+    document.getElementById("tagValueOverlay").style.left = (mousePosition.x + 20) + "px";
+    document.getElementById("tagValueOverlay").style.top = (mousePosition.y - 45) + "px";
+}
+
+function ClosetagValueOverlay()
+{
+    document.getElementById('tagValueOverlayBackground').remove();
+}
+
+function SetInterestValue(tagName, endValue)
+{
+    let profile = JSON.parse(selfProfile);
+
+    profile.tags[IndexOfTag(tagName)][1] = endValue;
+
+    selfProfile = JSON.stringify(profile);
+    AddTagsToContainer(profile);
+    ClosetagValueOverlay();
 }

@@ -15,8 +15,8 @@ var selfProfile =
     ],
     "tags": 
     [
-        ["Общение", "9"],
-        ["Животные", "3"]
+        ["Общение", 9],
+        ["Животные", 3]
     ],
     "instagram": "https://www.instagram.com/nover_lin/",
     "telegram": "https://t.me/noverlin",
