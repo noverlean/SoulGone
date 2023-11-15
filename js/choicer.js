@@ -258,7 +258,7 @@ function LoadImages(profile)
         {
             document.getElementById('images').insertAdjacentHTML(
                 `beforeend`,
-                `<div class="photo photo` + counter + `" id="` + element + counter + `"></div>`
+                `<div class="photo photo${counter}" id="${element + counter}"></div>`
             );
         }
 
@@ -268,16 +268,22 @@ function LoadImages(profile)
 
 function AddTagsToContainer(profile)
 {
-    let tagsSide = profile.id == JSON.parse(selfProfile).id ? "leftTags" : "rightTags";
-    console.log(profile);
+    let isMe = profile.id == JSON.parse(selfProfile).id;
+    let tagsSide = isMe ? "leftTags" : "rightTags";
 
     document.querySelectorAll('.intoTagContainer').forEach(element => element.remove());
 
     for (let i = 0; i < profile.tags.length; i++)
     {
+        let clickEventString = '';
+        if (isMe)
+        {
+            clickEventString = ` onclick="OpenInterestValueSetter('${profile.tags[i][0]}', ${profile.tags[i][1]})"`;
+        }
+
         document.getElementById(tagsSide).insertAdjacentHTML(
             `afterbegin`,
-            `<div class="tag intoTagContainer" onclick="OpenInterestValueSetter('` + profile.tags[i][0] + `', ` + profile.tags[i][1] + `)">` + profile.tags[i][0] + ` | ` + profile.tags[i][1] + `</div>`
+            `<div class="tag intoTagContainer"${clickEventString}>${profile.tags[i][0]} | ${profile.tags[i][1]}</div>`
         );
     }
 }

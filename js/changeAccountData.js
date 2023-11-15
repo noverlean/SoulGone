@@ -201,7 +201,7 @@ function SearchTag()
         {
             document.getElementById('tagAddListContainer').insertAdjacentHTML(
                 `afterbegin`,
-                `<div id="` + tags[i].category + `" class="tagAddListBlock"><p>` + tags[i].category + `</p></div>` +
+                `<div id="${tags[i].category}" class="tagAddListBlock"><p>${tags[i].category}</p></div>` +
                 `<div class="tagAddListSlicer"></div>`
             );
 
@@ -209,7 +209,7 @@ function SearchTag()
             {
                 document.getElementById(tags[i].category).insertAdjacentHTML(
                     `beforeend`,
-                    `<div class="tag" onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
+                    `<div class="tag" onclick="AddAndRemoveTagToMyTags('${tags[i].tags[k]}')">${tags[i].tags[k]}</div>`
                 );
             }
         }
@@ -222,12 +222,12 @@ function SearchTag()
 
                 if (IndexOfTag(tags[i].tags[k]) != -1)
                 {
-                    myTagStyle = 'style="background-color: ' + LightenDarkenColor(JSON.parse(selfProfile).color, 50) + ' !important;"';
+                    myTagStyle = `style="background-color: ${LightenDarkenColor(JSON.parse(selfProfile).color, 50)} !important;"`;
                 }
 
                 document.getElementById('tagAddListContainer').insertAdjacentHTML(
                     `beforeend`,
-                    `<div class="tag" ` + myTagStyle + ` onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
+                    `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tags[k]}')">${tags[i].tags[k]}</div>`
                 );
             }
         }
@@ -243,7 +243,7 @@ function FillTagAddPanel()
     {
         document.getElementById('tagAddListContainer').insertAdjacentHTML(
             `afterbegin`,
-            `<div id="` + tags[i].category + `" class="tagAddListBlock"><p>` + tags[i].category + `</p></div>`
+            `<div id="${tags[i].category}" class="tagAddListBlock"><p>${tags[i].category}</p></div>`
         );
         if (i != tags.length - 1)
             document.getElementById('tagAddListContainer').insertAdjacentHTML(
@@ -257,12 +257,12 @@ function FillTagAddPanel()
 
             if (IndexOfTag(tags[i].tags[k]) != -1)
             {
-                myTagStyle = 'style="background-color: ' + LightenDarkenColor(JSON.parse(selfProfile).color, 50) + ' !important;"';
+                myTagStyle = `style="background-color: ${LightenDarkenColor(JSON.parse(selfProfile).color, 50)} !important;"`;
             }
 
             document.getElementById(tags[i].category).insertAdjacentHTML(
                 `beforeend`,
-                `<div class="tag" ` + myTagStyle + `onclick="AddAndRemoveTagToMyTags('` + tags[i].tags[k] + `')">` + tags[i].tags[k] + `</div>`
+                `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tags[k]}')">${tags[i].tags[k]}</div>`
             );
         }
     }    
@@ -326,8 +326,8 @@ function OpenInterestValueSetter(tagName, existValue)
 
     document.getElementById("tagValues" + existValue).style.backgroundColor = LightenDarkenColor(JSON.parse(selfProfile).color, 50);
 
-    document.getElementById("tagValueOverlay").style.left = (mousePosition.x + 20) + "px";
-    document.getElementById("tagValueOverlay").style.top = (mousePosition.y - 45) + "px";
+    document.getElementById("tagValueOverlay").style.left = `${mousePosition.x + 20}px`;
+    document.getElementById("tagValueOverlay").style.top = `${mousePosition.y - 45}px`;
 }
 
 function ClosetagValueOverlay()

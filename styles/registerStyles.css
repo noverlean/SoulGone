@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
+
+*, *::after, *::before
+{
+    margin: 0;
+    font-family: 'Mulish', sans-serif;
+}
+
+body
+{
+    overflow: hidden;
+}
+
+.step
+{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+button
+{
+    width: 200px;
+    height: 50px;
+    background-color: #96e9fd;
+    border: none;
+    border-radius: 25px;
+    font-size: 24px;
+}
+
+.absolute
+{
+    display: block;
+    position: absolute;
+}
+
+.text
+{
+    color: white;
+}
+
+.Hi
+{
+    font-family: 'Russo One', sans-serif;
+    left: 8%;
+    top: 15%;
+}
+
+#container {
+    width: 60vw;
+    top: 0;
+    bottom: 0;
+
+    filter: url(#threshold) blur(0.6px);
+}
+
+#text1,
+#text2 {
+    position: absolute;
+    width: 100%;
+    display: inline-block;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 60pt;
+
+    text-align: start;
+
+    user-select: none;
+    letter-spacing: 4px;
+}
+
+.next
+{
+    position: absolute;
+    top: 85vh;
+}
+
+.codeWindow
+{
+    position: absolute;
+    width: 32%;
+    height: 30vh;
+    top: 40%;
+    right: 8%;
+    background-color: rgba(9, 1, 12, 0.623);
+    overflow: hidden;
+    border-radius: 20px;
+}
+.codeWindow:before {
+    content: "";
+    position: absolute;
+    background: inherit;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 2000px rgba(243, 237, 237, 0.5);
+    filter: blur(10px);
+    margin: -20px;
+  }
+
+.codeFilenamePanel
+{
+    width: 100%;
+    height: 25px;
+    align-items: start;
+    padding: 8px 15px;
+    background-color: #2e2e2e;
+    color: #c9c9c9;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 22px;
+    z-index: 2;
+    position: absolute;
+}
+
+.notepad
+{
+    width: 90%;
+    height: 94%;
+    padding: 3%;
+    font-family: 'Source Code Pro', monospace;
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 40px;
+    left: 15px;
+    z-index: 1;
+    white-space: normal;
+}
+.notepad *
+{
+    font-family: 'Source Code Pro', monospace;
+}
+.verticalLine
+{
+    position: absolute;
+    width: 4px;
+    height: 75%;
+    background-color: #777777;
+    top: 55px;
+    left: 10px;
+    border-radius: 10px;
+}
+

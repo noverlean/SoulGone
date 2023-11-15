@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/registerStyles.css">
+    <link rel="stylesheet" href="scss/email.css">
+    <link rel="stylesheet" href="scss/printCode.css">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@500&display=swap" rel="stylesheet">
+    <!-- font-family: 'Mulish', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <!-- font-family: 'Russo One', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- font-family: 'Source Code Pro', monospace; -->
+</head>
+<body>
+    <main>
+        <div id="step1" class="step">
+            <div class="Hi text absolute">
+                <div id="container">
+                    <span id="text1"></span>
+                    <span id="text2"></span>
+                </div>
+            </div>
+            <div class="codeWindow">
+                <div class="codeFilenamePanel">FindMyFavorite.exe</div>
+                <div class="verticalLine"></div>
+                <div id="notepad" class="notepad">
+                    <!-- <span class="blinking-cursor">_</span> -->
+                    <font color="#51ff00">SoulGone@me/</font>$ <font id="cursorStart" color="#00a2ff">
+                        <span is="type-async" id="type-text"><!-- find:run  --></span>
+                    </font><font color="#b700ff">
+                        <span is="type-async" id="type-text1"><!-- favorite  --></span>
+                    </font><br>
+                    <span is="type-async" id="type-text2"><!-- executing........................  --></span>
+                    <br>
+                    <span is="type-async" id="type-text3"><!-- Done.  --></span><br>
+                    <br>
+                    <span is="type-async" id="type-text4"><!-- MANY interesting persor were found!  --></span><br>
+                    <span is="type-async" id="type-text5"><!-- Let's start? ↩  --></span><br>
+                    <br>
+                    <!-- <font color="#51ff00">SoulGone@me/</font>$<br> -->
+                </div>
+            </div>
+            <button class="next" onclick="MoveNextStep(1)" href="#step2">Next</button>
+        </div>
+        <div id="step2" class="step">
+            <button class="next" onclick="MoveNextStep(2)" href="#step3">Next</button>
+        </div>
+        <div id="step3" class="step">
+            <button class="next" onclick="MoveNextStep(3)" href="#step4">Next</button>
+            <div class="letter-image">
+                <div class="animated-mail">
+                  <div class="back-fold"></div>
+                  <div class="letter">
+                    <div class="letter-border"></div>
+                    <div class="letter-title"></div>
+                    <div class="letter-context"></div>
+                    <div class="letter-stamp">
+                      <div class="letter-stamp-inner"></div>
+                    </div>
+                  </div>
+                  <div class="top-fold"></div>
+                  <div class="body"></div>
+                  <div class="left-fold"></div>
+                </div>
+                <div class="shadow"></div>
+              </div>
+        </div>
+        <div id="step4" class="step">
+            <button class="next" onclick="Done(); MoveNextStep(3)" href="#step1">Done.</button>
+        </div>
+    </main>
+
+    <svg id="filters">
+        <defs>
+            <filter id="threshold">
+                <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0
+                                        0 1 0 0 0
+                                        0 0 1 0 0
+                                        0 0 0 255 -140" />
+            </filter>
+        </defs>
+    </svg>
+    <script src="js/printCodeFX.js"></script>
+    <script src="js/registerNavigator.js"></script>
+    <script src="js/smoothTextAnimation.js"></script>
+</body>
+</html>
