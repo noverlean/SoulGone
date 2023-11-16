@@ -1,0 +1,47 @@
+@keyframes showDescription 
+{
+    0%
+    {
+        left: -50%;
+    }
+    100%
+    {
+        left: 8%;
+    }
+}
+
+@keyframes closeDescription 
+{
+    0%
+    {
+        left: 8%;
+    }
+    100%
+    {
+        left: -50%;
+    }
+}
+
+@keyframes showCase
+{
+    0%
+    {
+        right: -50%;
+    }
+    100%
+    {
+        right: 8%;
+    }
+}
+
+@keyframes closeCase
+{
+    0%
+    {
+        right: 8%;
+    }
+    100%
+    {
+        right: -50%;
+    }
+}

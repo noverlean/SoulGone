@@ -44,7 +44,7 @@ async function init () {
                 window.getComputedStyle(notepad, null).getPropertyValue('top') :
                 notepad.currentStyle? notepad.currentStyle.top : '0'
             );
-            console.log(top);
+
             notepad.style.top = `calc(${top} - 1px)`;
             await sleep(2)
         }
