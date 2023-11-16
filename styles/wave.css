@@ -1,0 +1,198 @@
+.waves
+{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+.wave1
+{
+    position: absolute;
+    bottom: -75px;
+    width: 100%;
+    animation-fill-mode: forwards;
+}
+.wave2
+{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    animation-fill-mode: forwards;
+}
+.wave3
+{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    animation-fill-mode: forwards;
+}
+.wave4
+{
+    position: absolute;
+    bottom: -80px;
+    width: 100%;
+    animation-fill-mode: forwards;
+}
+
+@keyframes step0to1for1 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: -75px;
+    }
+}
+@keyframes step0to1for2 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: -200px;
+    }
+}
+@keyframes step0to1for3 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: -150px;
+    }
+}
+@keyframes step1to2for4 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: -100px;
+    }
+}
+/* ----------------------------------- */
+@keyframes step1to2for1 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: -75px;
+    }
+}
+@keyframes step1to2for2 {
+    0% 
+    {
+        bottom: -200px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
+@keyframes step1to2for3 {
+    0% 
+    {
+        bottom: -150px;
+    }
+    100% 
+    {
+        bottom: -150px;
+    }
+}
+@keyframes step1to2for4 {
+    0% 
+    {
+        bottom: -100px;
+    }
+    100% 
+    {
+        bottom: -80px;
+    }
+}
+/* ----------------------------------- */
+@keyframes step2to3for1 {
+    0% 
+    {
+        bottom: -75px;
+    }
+    100% 
+    {
+        bottom: -75px;
+    }
+}
+@keyframes step2to3for2 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
+@keyframes step2to3for3 {
+    0% 
+    {
+        bottom: -150px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
+@keyframes step2to3for4 {
+    0% 
+    {
+        bottom: -80px;
+    }
+    100% 
+    {
+        bottom: -60px;
+    }
+}
+/* ----------------------------------- */
+@keyframes step2to3for1 {
+    0% 
+    {
+        bottom: -75px;
+    }
+    100% 
+    {
+        bottom: -75px;
+    }
+}
+@keyframes step2to3for2 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
+@keyframes step2to3for3 {
+    0% 
+    {
+        bottom: 0px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
+@keyframes step2to3for4 {
+    0% 
+    {
+        bottom: -60px;
+    }
+    100% 
+    {
+        bottom: 0px;
+    }
+}
