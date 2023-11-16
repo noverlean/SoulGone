@@ -3,13 +3,17 @@ let step = -1;
 let stepDescription = 
 [
     `
-    Проект SoulGone - масштабная система, созданная помогать близким людям искать друг друга!
+    🔥Проект SoulGone - масштабная система, созданная помогать близким людям искать друг друга!😍
     `,
     `
-    Для корректной обработки данных нам нужно знать некоторые ваши данные... Обычно это не занимает более пары минут!🥰
+    Для корректной обработки данных нам нужно знать некоторые ваши данные...😉 <br><br>Обычно это не занимает более пары минут!🥰
     `,
-    ``,
-    ``,
+    `
+    😎Осталось ввести код подтверджения, который был отправлен на вашу почту. <br><br>(Он может быть в Спаме 📌)
+    `,
+    `
+    Почти все готово!!!❤️‍🔥 <br><br>Давай уже начнем это увлекательное путешествие?🌍
+    `,
 ]
 MoveNextStep(1);
 function MoveNextStep(direction)
@@ -34,10 +38,21 @@ function MoveNextStep(direction)
         document.getElementById(`wave${i}`).style.animation = `step${now}to${next}for${i} 1s ease-out ${directionString}`;
     }
 
-    if (next != 0)
+    switch (next)
     {
-        document.getElementById('stepDescription').style.animation = `closeDescription .5s ease-in`;
-        document.getElementById('caseContainer').style.animation = `closeCase .5s ease-in`;
+        case 0:
+            document.getElementById('btnNext').style.animation = `showButtons 1s ease-out`;
+            document.getElementById('btnReload').style.animation = `showButtons 1s ease-out`;
+            break;
+        case 3:
+            document.getElementById('stepDescription').style.animation = `closeDescription .5s ease-in`;
+            document.getElementById('caseContainer').style.animation = `closeCase .5s ease-in`;
+            document.getElementById('btnNext').style.animation = `closeButtons 1s ease-out`;
+            document.getElementById('btnReload').style.animation = `closeButtons 1s ease-out`;
+            break;
+        default:
+            document.getElementById('stepDescription').style.animation = `closeDescription .5s ease-in`;
+            document.getElementById('caseContainer').style.animation = `closeCase .5s ease-in`;
     }
     
 

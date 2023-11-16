@@ -45,3 +45,27 @@
         right: -50%;
     }
 }
+
+@keyframes showButtons 
+{
+    0%
+    {
+        bottom: -10vh;
+    }
+    100%
+    {
+        bottom: 10vh;
+    }
+}
+
+@keyframes closeButtons 
+{
+    0%
+    {
+        bottom: 10vh;
+    }
+    100%
+    {
+        bottom: -10vh;
+    }
+}
