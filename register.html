@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="scss/printCode.css">
     <link rel="stylesheet" href="styles/wave.css">
     <link rel="stylesheet" href="styles/registerPageAnimations.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Document</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@500&display=swap" rel="stylesheet">
@@ -153,7 +154,7 @@
                 Проект SoulGone - масштабная система, созданная помогать близким людям искать друг друга!
             </div>
             <div class="caseContainer" id="caseContainer">
-              <div class="codeWindow">
+              <div id='codeWindow' class="codeWindow">
                 <div class="codeFilenamePanel">FindMyFavorite.exe</div>
                 <div class="verticalLine"></div>
                 <div id="notepad" class="notepad">
@@ -172,38 +173,57 @@
                     <br>
                     <!-- <font color="#51ff00">SoulGone@me/</font>$<br> -->
                 </div>
-                
-            </div>
+              </div>
+
+              <div id='formStructor' class="form-structor">
+                <div class="signup">
+                  <h2 class="form-title" id="signup">Зарегистрироваться</h2>
+                  <div class="form-holder">
+                    <input type="text" class="input" placeholder="Name" />
+                    <input type="email" class="input" placeholder="Email" />
+                    <input type="password" class="input" placeholder="Password" />
+                  </div>
+                </div>
+                <div class="login slide-up">
+                  <div class="center">
+                    <h2 class="form-title" id="login">Войти</h2>
+                    <div class="form-holder">
+                      <input type="email" class="input" placeholder="Email" />
+                      <input type="password" class="input" placeholder="Password" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id='email' class="caseEmail">
+                <div class="letter-image">
+                  <div class="animated-mail">
+                    <div class="back-fold"></div>
+                    <div class="letter">
+                      <div class="letter-border"></div>
+                      <div class="letter-title"></div>
+                      <div class="emailCodeInputs">
+                        <input type="text" class="emailInput" value="A" maxlength="1">
+                        <input type="text" class="emailInput" value="0" maxlength="1">
+                        <input type="text" class="emailInput" value="Z" maxlength="1">
+                        <input type="text" class="emailInput" value="9" maxlength="1">
+                      </div> 
+                      <div class="letter-context"></div>
+                      <div class="letter-stamp">
+                        <div class="letter-stamp-inner"></div>
+                      </div>
+                    </div>
+                    <div class="top-fold"></div>
+                    <div class="body"></div>
+                    <div class="left-fold"></div>
+                  </div>
+                  <div class="shadow"></div>
+                </div>
+              </div>
             </div>
             
             <button id="btnNext" class="next" style="left: calc(50% + 50px); background-color: white; color: black;" onclick="MoveNextStep(1)" href="#step2">Далее</button>
             <button id="btnReload" class="next" style="left: calc(50% - 200px)" onclick="MoveNextStep(0)" href="#step2">Заново</button>
-        </div>
-        <div id="step2" class="step">
-            <button class="next" onclick="MoveNextStep()" href="#step3">Next</button>
-        </div>
-        <div id="step3" class="step">
-            <button class="next" onclick="MoveNextStep()" href="#step4">Next</button>
-            <div class="letter-image">
-                <div class="animated-mail">
-                  <div class="back-fold"></div>
-                  <div class="letter">
-                    <div class="letter-border"></div>
-                    <div class="letter-title"></div>
-                    <div class="letter-context"></div>
-                    <div class="letter-stamp">
-                      <div class="letter-stamp-inner"></div>
-                    </div>
-                  </div>
-                  <div class="top-fold"></div>
-                  <div class="body"></div>
-                  <div class="left-fold"></div>
-                </div>
-                <div class="shadow"></div>
-              </div>
-        </div>
-        <div id="step4" class="step">
-            <button class="next" onclick="Done(); MoveNextStep(3)" href="#step1">Done.</button>
         </div>
     </main>
     
@@ -218,6 +238,7 @@
             </filter>
         </defs>
     </svg>
+    <script src="js/logIn.js"></script>
     <script src="js/printCodeFX.js"></script>
     <script src="js/registerNavigator.js"></script>
     <script src="js/smoothTextAnimation.js"></script>

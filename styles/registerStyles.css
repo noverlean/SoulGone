@@ -121,8 +121,8 @@ button
     height: 25px;
     align-items: start;
     padding: 8px 15px;
-    background-color: #2e2e2e;
-    color: #c9c9c9;
+    background-color: #444444;
+    color: #ffffff;
     font-family: 'Source Code Pro', monospace;
     font-size: 22px;
     z-index: 2;
@@ -181,7 +181,7 @@ button
     background-color: rgba(9, 1, 12, 0.3);
     color: white;
     padding: 25px;
-    font-size: 26px;
+    font-size: 25px;
     animation-fill-mode: forwards !important;
 }
 .stepDescription:before 
@@ -200,8 +200,24 @@ button
 }
 .caseContainer
 {
+    display: block;
+    width: 30%;
+    min-width: 300px;
     position: absolute;
     top: 40%;
     right: -50%;
     animation-fill-mode: forwards !important;
+}
+
+.caseEmail
+{
+    display: block;
+    width: 32%;
+    height: 27vh;
+    min-width: 380px;
+    position: absolute;
+    top: 40%;
+    right: -50%;
+    animation-fill-mode: forwards !important;
+    scale: 1.4;
 }

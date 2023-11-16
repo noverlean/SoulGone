@@ -3,7 +3,7 @@ let step = -1;
 let stepDescription = 
 [
     `
-    🔥Проект SoulGone - масштабная система, созданная помогать близким людям искать друг друга!😍
+    🔥Проект SoulGone - масштабная система с посиковыми алгоритмами, созданная помогать близким интересами людям искать друг друга!😍
     `,
     `
     Для корректной обработки данных нам нужно знать некоторые ваши данные...😉 <br><br>Обычно это не занимает более пары минут!🥰
@@ -14,6 +14,12 @@ let stepDescription =
     `
     Почти все готово!!!❤️‍🔥 <br><br>Давай уже начнем это увлекательное путешествие?🌍
     `,
+]
+let caseId =
+[
+    `codeWindow`,
+    `formStructor`,
+    `email`
 ]
 MoveNextStep(1);
 function MoveNextStep(direction)
@@ -59,6 +65,14 @@ function MoveNextStep(direction)
     setTimeout(() => {
         document.getElementById('stepDescription').innerHTML = stepDescription[next];
 
+        for (let k = 0; k < 3; k++)
+        {
+            console.log(document.getElementById(caseId[k]));
+            console.log((next == k ? 'block !important' : 'none !important'));
+            console.log(caseId[k]);
+            document.getElementById(caseId[k]).style.display = (next == k ? 'block' : 'none');
+        }
+
         document.getElementById('stepDescription').style.animation = `showDescription .5s ease`;
         document.getElementById('caseContainer').style.animation = `showCase .5s ease`;
     }, 500);
@@ -71,3 +85,19 @@ function Done()
 {
     alert("Done");
 }
+
+document.querySelectorAll('input').forEach( el => {
+    console.log(el)
+    el.addEventListener('keydown', e => {
+        console.log(e.keyCode);
+        if(e.keyCode === 13) {
+            let nextEl = el.nextElementSibling;
+            console.log(nextEl)
+            if(nextEl.nodeName === 'INPUT') {
+                nextEl.focus();
+            }else {
+                alert('done');
+            }
+        }
+    })
+})
