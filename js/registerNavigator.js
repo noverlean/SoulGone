@@ -19,7 +19,8 @@ let caseId =
 [
     `codeWindow`,
     `formStructor`,
-    `email`
+    `email`,
+    `enterPanel`
 ]
 MoveNextStep(1);
 function MoveNextStep(direction)
@@ -65,7 +66,7 @@ function MoveNextStep(direction)
     setTimeout(() => {
         document.getElementById('stepDescription').innerHTML = stepDescription[next];
 
-        for (let k = 0; k < 3; k++)
+        for (let k = 0; k < 4; k++)
         {
             console.log(document.getElementById(caseId[k]));
             console.log((next == k ? 'block !important' : 'none !important'));

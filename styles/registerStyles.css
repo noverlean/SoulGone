@@ -221,3 +221,22 @@ button
     animation-fill-mode: forwards !important;
     scale: 1.4;
 }
+
+.enterPanel
+{
+    width: 32%;
+    height: 27vh;
+    min-width: 380px;
+    position: absolute;
+    top: 40%;
+    animation-fill-mode: forwards !important;
+}
+
+.done
+{
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    top: calc(50% - 25px);
+    left: calc(50% - 75px);
+}
