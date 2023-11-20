@@ -146,8 +146,9 @@
             </div>
             <div class="Hi text absolute">
                 <div id="container">
-                    <span id="text1"></span>
-                    <span id="text2"></span>
+                    <h2 style="font-size: 50px;" class="heading" data-target-resolver></h2>
+                    <!-- <span id="text1"></span>
+                    <span id="text2"></span> -->
                 </div>
             </div>
             <div class="stepDescription" id="stepDescription">
@@ -179,17 +180,17 @@
                 <div class="signup">
                   <h2 class="form-title" id="signup">Зарегистрироваться</h2>
                   <div class="form-holder">
-                    <input type="text" class="input" placeholder="Name" />
-                    <input type="email" class="input" placeholder="Email" />
-                    <input type="password" class="input" placeholder="Password" />
+                    <input id="signupName" type="text" class="input" placeholder="Name" />
+                    <input id="signupEmail" type="email" class="input" placeholder="Email" />
+                    <input id="signupPassword" type="password" class="input" placeholder="Password" />
                   </div>
                 </div>
                 <div class="login slide-up">
                   <div class="center">
                     <h2 class="form-title" id="login">Войти</h2>
                     <div class="form-holder">
-                      <input type="email" class="input" placeholder="Email" />
-                      <input type="password" class="input" placeholder="Password" />
+                      <input id="loginEmain" type="email" class="input" placeholder="Email" />
+                      <input id="loginPassword" type="password" class="input" placeholder="Password" />
                     </div>
                   </div>
                 </div>
@@ -226,7 +227,7 @@
               </div>
             </div>
             
-            <button id="btnNext" class="next" style="left: calc(50% + 50px); background-color: white; color: black;" onclick="MoveNextStep(1)" href="#step2">Далее</button>
+            <button id="btnNext" class="next" style="left: calc(50% + 50px); background-color: white; color: black;" onclick="MoveNextStep(1); NextBTNHandler()" href="#step2">Далее</button>
             <button id="btnReload" class="next" style="left: calc(50% - 200px)" onclick="MoveNextStep(0)" href="#step2">Заново</button>
         </div>
     </main>
@@ -243,8 +244,9 @@
         </defs>
     </svg>
     <script src="js/logIn.js"></script>
+    <script src="js/registration.js"></script>
+    <script src="js/registerPageMainTextAnim.js"></script>
     <script src="js/printCodeFX.js"></script>
     <script src="js/registerNavigator.js"></script>
-    <script src="js/smoothTextAnimation.js"></script>
 </body>
 </html>

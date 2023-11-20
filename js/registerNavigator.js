@@ -1,4 +1,4 @@
-let step = -1;
+var step = -1;
 
 let stepDescription = 
 [
@@ -68,9 +68,6 @@ function MoveNextStep(direction)
 
         for (let k = 0; k < 4; k++)
         {
-            console.log(document.getElementById(caseId[k]));
-            console.log((next == k ? 'block !important' : 'none !important'));
-            console.log(caseId[k]);
             document.getElementById(caseId[k]).style.display = (next == k ? 'block' : 'none');
         }
 
@@ -88,7 +85,6 @@ function Done()
 }
 
 document.querySelectorAll('input').forEach( el => {
-    console.log(el)
     el.addEventListener('keydown', e => {
         console.log(e.keyCode);
         if(e.keyCode === 13) {
