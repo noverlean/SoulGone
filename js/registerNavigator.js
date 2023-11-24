@@ -60,8 +60,7 @@ function MoveNextStep(direction)
         default:
             document.getElementById('stepDescription').style.animation = `closeDescription .5s ease-in`;
             document.getElementById('caseContainer').style.animation = `closeCase .5s ease-in`;
-    }
-    
+    }    
 
     setTimeout(() => {
         document.getElementById('stepDescription').innerHTML = stepDescription[next];
@@ -86,7 +85,6 @@ function Done()
 
 document.querySelectorAll('input').forEach( el => {
     el.addEventListener('keydown', e => {
-        console.log(e.keyCode);
         if(e.keyCode === 13) {
             let nextEl = el.nextElementSibling;
             console.log(nextEl)

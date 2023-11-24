@@ -204,3 +204,51 @@
         height: 0%;
     }
 }
+
+@keyframes showBlocker {
+    0%
+    {
+        background-color: rgba(0, 0, 0, 0);
+        display: flex;
+    }
+    100%
+    {
+        background-color: rgba(0, 0, 0, 0.685);
+        display: flex;
+    }
+}
+
+@keyframes closeBlocker {
+    0%
+    {
+        background-color: rgba(0, 0, 0, 0.685);
+        display: flex;
+    }
+    100%
+    {
+        background-color: rgba(0, 0, 0, 0);
+        display: none;
+    }
+}
+
+@keyframes showStealedSVG {
+    0%
+    {
+        scale: 0;
+    }
+    100%
+    {
+        scale: 1;
+    }
+}
+
+@keyframes closeStealedSVG {
+    0%
+    {
+        scale: 1;
+    }
+    100%
+    {
+        scale: 0;
+    }
+}
