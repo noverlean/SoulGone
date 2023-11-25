@@ -21,10 +21,31 @@ function NextBTNHandler()
                 email = document.getElementById('signupEmail').value.trim();
                 password = document.getElementById('signupPassword').value.trim();
 
-                if (name.trim() != "" && email.trim() != "" && password.trim() != "")
-                    RegisterUser(name, email, password);
-                else
-                    ShowMessage("Не все поля заполнены!")
+                // if (name.trim() == "" || email.trim() == "" || password.trim() == "")
+                // {
+                //     ShowMessage("Имя пользователя должно содержать от 2 до 15 латинских либо кирилических символов");
+                //     return;
+                // }
+
+                if (!isEmailValid(email))
+                {
+                    ShowMessage("Ваш адрес электронной почты неверен!");
+                    return;
+                }
+
+                if (!isPasswordValid(password))
+                {
+                    ShowMessage("Ваш пароль электронной почты неверен! Он должен содержать от 8 до 16 символов, минимум 1 цифру или 1 букву. Разрешен только латинский алфавит любого регистра");
+                    return;
+                }
+
+                if (name.trim() == "" || email.trim() == "" || password.trim() == "")
+                {
+                    ShowMessage("Не все поля заполнены!");
+                    return;
+                }
+
+                RegisterUser(name, email, password);
             }
             else if (registerMode == "login")
             {
@@ -72,3 +93,14 @@ function ShowMessage(message)
     document.getElementById('message').innerHTML = message;
     document.getElementById('messagePanel').style.display = 'flex';
 }
+
+function isEmailValid(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isPasswordValid(password) {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{8,16}$/;
+    return passwordRegex.test(password);
+}
+  
