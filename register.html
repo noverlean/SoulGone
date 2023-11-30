@@ -20,6 +20,9 @@
     <!-- font-family: 'Source Code Pro', monospace; -->
 </head>
 <body>
+  <form action="/pay" method="post">
+    <input type="hidden" name="CSRFtoken" value="ZjJkMzA3YWEyMzg2YTBjNzQzM2NlODUwMTllZTU2MTk=">
+</form>
     
     <main>
       <div id='messagePanel' class="messagePanel" onclick="document.getElementById('messagePanel').style.display = 'none';">
@@ -239,10 +242,10 @@
                       <div class="letter-border"></div>
                       <div class="letter-title"></div>
                       <div class="emailCodeInputs">
-                        <input type="text" class="emailInput" value="A" maxlength="1">
-                        <input type="text" class="emailInput" value="0" maxlength="1">
-                        <input type="text" class="emailInput" value="Z" maxlength="1">
-                        <input type="text" class="emailInput" value="9" maxlength="1">
+                        <input type="text" id="code1" class="emailInput" value="A" maxlength="1">
+                        <input type="text" id="code2" class="emailInput" value="0" maxlength="1">
+                        <input type="text" id="code3" class="emailInput" value="Z" maxlength="1">
+                        <input type="text" id="code4" class="emailInput" value="9" maxlength="1">
                       </div> 
                       <div class="letter-context"></div>
                       <div class="letter-stamp">

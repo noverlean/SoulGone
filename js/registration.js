@@ -59,15 +59,16 @@ function NextBTNHandler()
             }
             break;
         case 2:
-            MoveNextStep(1); 
-            console.log("email");
+            let code = getElementById('code1').value + getElementById('code2').value + getElementById('code3').value + getElementById('code4').value;
+            let username = localStorage.getItem('usernameForCodeAcception');
+            ConfirmCode(username, code.toLowerCase());
             break;
         default:
             MoveNextStep(1);
     }
 }
 
-function RegisterUser(name, email, password)
+async function RegisterUser(name, email, password)
 {
     let data = {
         "username": name.trim(), 
@@ -75,17 +76,42 @@ function RegisterUser(name, email, password)
         "password": password.trim()
     };
 
-    SendRequest("POST", "http://localhost:8090/demo/registration", data, "register");
+    let result = await SendRequest("POST", "http://localhost:8090/demo/registration/code/generate", data);
+    if (result != null)
+    {
+        localStorage.setItem('usernameForCodeAcception', result);
+        MoveNextStep(1);
+    }
 }
 
-function LogIn(email, password)
+async function ConfirmCode(username, code)
 {
     let data = {
-        "email": email.trim(), 
+        "username": username.trim(),
+        "code": code.trim()
+    };
+
+    let result = await SendRequest("POST", "http://localhost:8090/demo/registration/code/confirm", data);
+    if (result != null)
+    {
+        localStorage.setItem('username', result.username);
+        LogIn(result.username, document.getElementById('signupPassword').value.trim());
+        MoveNextStep(1);
+    }
+}
+
+async function LogIn(username, password)
+{
+    let data = {
+        "username": username.trim(), 
         "password": password.trim()
     };
 
-    SendRequest("POST", "http://localhost:8090/demo/auth", data, "login");
+    let result = await SendRequest("POST", "http://localhost:8090/demo/auth", data);
+    if (result != null)
+    {
+        Token.Save(result.token);
+    }
 }
 
 function ShowMessage(message)

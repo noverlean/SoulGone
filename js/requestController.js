@@ -1,12 +1,14 @@
-function SendRequest(type, url, data, handlerContext)
+async function SendRequest(type, url, data)
 {    
     Blocker.Show();
+    let result;
 
-    $.ajax
+    await $.ajax
     ({
         type: type,
         data: JSON.stringify(data),
         url: url,
+        async: true,
         headers: { 
             'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
             'Content-Type': 'application/json'
@@ -16,23 +18,25 @@ function SendRequest(type, url, data, handlerContext)
             console.log(serverData);
             Blocker.Close();
 
-            switch (handlerContext)
-            {
-                case "login":
-                    MoveNextStep(1);
-                    break;
-                case "register":
-                    if (email.trim() != "" && password.trim() != "")
-                        LogIn(data.email.trim(), data.password.trim());
-                    else
-                        ShowMessage("Не все поля заполнены!");
-                    break;
-                case "tokenCheck":
-                    Token.Save(serverData.token);
-                    break;
-                default:
-                    console.log("No success handler!");
-            }
+            result = serverData;
+
+            // switch (handlerContext)
+            // {
+            //     case "login":
+            //         MoveNextStep(1);
+            //         break;
+            //     case "register":
+            //         if (email.trim() != "" && password.trim() != "")
+            //             LogIn(data.email.trim(), data.password.trim());
+            //         else
+            //             ShowMessage("Не все поля заполнены!");
+            //         break;
+            //     case "tokenCheck":
+            //         Token.Save(serverData.token);
+            //         break;
+            //     default:
+            //         console.log("No success handler!");
+            // }
         },
         error: function(e)
         {
@@ -42,7 +46,7 @@ function SendRequest(type, url, data, handlerContext)
                 if (e.responseJSON.status == 401 && location.pathname != "/register.html")
                 {
                     alert("Кажется ваша сессия истекла, вам следует авторизоваться заново!");
-                    location.href = "../register.html";
+                    location.href = "register.html";
                 }
 
                 ShowMessage(`${e.responseJSON.status}: ${e.responseJSON.message}`);
@@ -50,7 +54,11 @@ function SendRequest(type, url, data, handlerContext)
             catch (err) 
             {
                 ShowMessage(`Что-то пошло не так... Попробуйте позже)`);
-            }            
+            }      
+            
+            return null;
         }
     });
+
+    return result;
 }
