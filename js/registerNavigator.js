@@ -80,7 +80,7 @@ function MoveNextStep(direction)
 
 function Done()
 {
-    alert("Done");
+    LogIn(localStorage.getItem('username'), document.getElementById('signupPassword').value.trim());
 }
 
 document.querySelectorAll('input').forEach( el => {

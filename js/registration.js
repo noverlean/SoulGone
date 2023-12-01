@@ -13,11 +13,11 @@ function NextBTNHandler()
     switch (step)
     {
         case 1:
-            let name, email, password;
+            let username, email, password;
 
             if (registerMode == "signup")
             {
-                name = document.getElementById('signupName').value.trim();
+                username = document.getElementById('signupName').value.trim();
                 email = document.getElementById('signupEmail').value.trim();
                 password = document.getElementById('signupPassword').value.trim();
 
@@ -39,39 +39,39 @@ function NextBTNHandler()
                     return;
                 }
 
-                if (name.trim() == "" || email.trim() == "" || password.trim() == "")
+                if (username.trim() == "" || email.trim() == "" || password.trim() == "")
                 {
                     ShowMessage("Не все поля заполнены!");
                     return;
                 }
 
-                RegisterUser(name, email, password);
+                RegisterUser(username, email, password);
             }
             else if (registerMode == "login")
             {
-                email = document.getElementById('loginEmail').value.trim();
-                password = document.getElementById('loginPassword').value.trim();
+                let username = document.getElementById('loginUsername').value.trim();
+                let password = document.getElementById('loginPassword').value.trim();
 
-                if (email.trim() != "" && password.trim() != "")
-                    LogIn(email, password);
+                if (username.trim() != "" && password.trim() != "")
+                    LogIn(username, password);
                 else
                     ShowMessage("Не все поля заполнены!");
             }
             break;
         case 2:
-            let code = getElementById('code1').value + getElementById('code2').value + getElementById('code3').value + getElementById('code4').value;
-            let username = localStorage.getItem('usernameForCodeAcception');
-            ConfirmCode(username, code.toLowerCase());
+            let code = document.getElementById('code1').value + document.getElementById('code2').value + document.getElementById('code3').value + document.getElementById('code4').value;
+            let name = localStorage.getItem('usernameForCodeAcception');
+            ConfirmCode(name, code.toLowerCase());
             break;
         default:
             MoveNextStep(1);
     }
 }
 
-async function RegisterUser(name, email, password)
+async function RegisterUser(username, email, password)
 {
     let data = {
-        "username": name.trim(), 
+        "username": username.trim(), 
         "email": email.trim(), 
         "password": password.trim()
     };
@@ -95,7 +95,6 @@ async function ConfirmCode(username, code)
     if (result != null)
     {
         localStorage.setItem('username', result.username);
-        LogIn(result.username, document.getElementById('signupPassword').value.trim());
         MoveNextStep(1);
     }
 }
@@ -111,13 +110,8 @@ async function LogIn(username, password)
     if (result != null)
     {
         Token.Save(result.token);
+        location.href = "index.html";
     }
-}
-
-function ShowMessage(message)
-{
-    document.getElementById('message').innerHTML = message;
-    document.getElementById('messagePanel').style.display = 'flex';
 }
 
 function isEmailValid(email) {

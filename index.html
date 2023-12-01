@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/photosGrid.css">
     <link rel="stylesheet" href="styles/animations.css">
     <link rel="stylesheet" href="styles/helpWindowOnHovering.css">
+    <link rel="stylesheet" href="styles/message.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> 
     <!-- font-family: 'Nunito', sans-serif; -->
@@ -21,6 +22,11 @@
 </head>
 <body>
     <main id="main">
+        <div id='messagePanel' class="messagePanel" onclick="document.getElementById('messagePanel').style.display = 'none';">
+            <div id='message' class="message"  onclick="event.stopPropagation()">
+              Сообщение
+            </div>
+          </div>
         <div class="bunner" id="bunner"><div class="newBanner" id="newBanner"></div></div>
 
         <div class="accountOpenCloseButton" id="accountOpenCloseButton">
@@ -94,6 +100,7 @@
     <script src="temp/selfProfile.js"></script>
     <script src="temp/tags.js"></script>
 
+    <script src="js/message.js"></script>
     <script src="js/mousePositionController.js"></script>
     <script src="js/account.js"></script>
     <script src="js/choicer.js"></script>

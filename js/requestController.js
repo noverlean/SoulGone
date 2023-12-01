@@ -19,24 +19,6 @@ async function SendRequest(type, url, data)
             Blocker.Close();
 
             result = serverData;
-
-            // switch (handlerContext)
-            // {
-            //     case "login":
-            //         MoveNextStep(1);
-            //         break;
-            //     case "register":
-            //         if (email.trim() != "" && password.trim() != "")
-            //             LogIn(data.email.trim(), data.password.trim());
-            //         else
-            //             ShowMessage("Не все поля заполнены!");
-            //         break;
-            //     case "tokenCheck":
-            //         Token.Save(serverData.token);
-            //         break;
-            //     default:
-            //         console.log("No success handler!");
-            // }
         },
         error: function(e)
         {
