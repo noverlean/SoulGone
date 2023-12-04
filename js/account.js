@@ -58,7 +58,7 @@ function OpenAccount()
         
     setTimeout(()=>{
         if (state)
-            FillContent(selfProfile);
+            FillContent(selfProfileObj);
         else            
             FillContent(content);
     }, 500);
@@ -95,14 +95,12 @@ function VerticalScaleAnimation(tag, startValue, endValue)
     setTimeout(()=>{        
         document.getElementById(tag).style.scale = endValue;
 
-        FillAccountEditorPanels(selfProfile);
+        FillAccountEditorPanels(selfProfileObj);
     }, 500);
 }
 
-function FillAccountEditorPanels(json)
+function FillAccountEditorPanels(profile)
 {
-    let profile = JSON.parse(json);
-
     document.getElementById('nameEditInput').value = profile.name;
     document.getElementById('ageEditInput').value = profile.age;
     document.getElementById('descriptionEditInput').value = profile.description;

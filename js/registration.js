@@ -21,12 +21,6 @@ function NextBTNHandler()
                 email = document.getElementById('signupEmail').value.trim();
                 password = document.getElementById('signupPassword').value.trim();
 
-                // if (name.trim() == "" || email.trim() == "" || password.trim() == "")
-                // {
-                //     ShowMessage("Имя пользователя должно содержать от 2 до 15 латинских либо кирилических символов");
-                //     return;
-                // }
-
                 if (!isEmailValid(email))
                 {
                     ShowMessage("Ваш адрес электронной почты неверен!");

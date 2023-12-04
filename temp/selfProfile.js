@@ -24,3 +24,5 @@ var selfProfile =
     "twitter": "",
     "color": "#5820be"
 }`;
+
+var selfProfileObj;

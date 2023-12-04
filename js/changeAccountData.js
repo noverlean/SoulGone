@@ -222,7 +222,7 @@ function SearchTag()
 
                 if (IndexOfTag(tags[i].tags[k]) != -1)
                 {
-                    myTagStyle = `style="background-color: ${LightenDarkenColor(JSON.parse(selfProfile).color, 50)} !important;"`;
+                    myTagStyle = `style="background-color: ${LightenDarkenColor(selfProfileObj.color, 50)} !important;"`;
                 }
 
                 document.getElementById('tagAddListContainer').insertAdjacentHTML(
@@ -234,7 +234,6 @@ function SearchTag()
     } 
 }
 
-FillTagAddPanel();
 function FillTagAddPanel()
 {
     document.getElementById('tagAddListContainer').innerHTML = "";
@@ -257,7 +256,7 @@ function FillTagAddPanel()
 
             if (IndexOfTag(tags[i].tags[k]) != -1)
             {
-                myTagStyle = `style="background-color: ${LightenDarkenColor(JSON.parse(selfProfile).color, 50)} !important;"`;
+                myTagStyle = `style="background-color: ${LightenDarkenColor(selfProfileObj.color, 50)} !important;"`;
             }
 
             document.getElementById(tags[i].category).insertAdjacentHTML(
@@ -270,31 +269,28 @@ function FillTagAddPanel()
 
 function AddAndRemoveTagToMyTags(tagName)
 {
-    let _profile = JSON.parse(selfProfile);
     let index = IndexOfTag(tagName);
 
     if (index == -1)
     {
-        _profile.tags.push([tagName, 5]);
+        selfProfileObj.tags.push([tagName, 5]);
     }
     else
     {
-        _profile.tags.splice(index, 1);
+        selfProfileObj.tags.splice(index, 1);
     }
 
-    selfProfile = JSON.stringify(_profile);
     FillTagAddPanel();
-    AddTagsToContainer(_profile);
+    AddTagsToContainer(selfProfileObj);
 }
 
 function IndexOfTag(tagName)
 {
     let index = -1;
-    let _profile = JSON.parse(selfProfile);
 
-    for (let i = 0; i < _profile.tags.length; i++)
+    for (let i = 0; i < selfProfileObj.tags.length; i++)
     {
-        if (_profile.tags[i][0] == tagName)
+        if (selfProfileObj.tags[i][0] == tagName)
         {
             index = i;
             break;
@@ -324,7 +320,7 @@ function OpenInterestValueSetter(tagName, existValue)
         </div>`
     );
 
-    document.getElementById("tagValues" + existValue).style.backgroundColor = LightenDarkenColor(JSON.parse(selfProfile).color, 50);
+    document.getElementById("tagValues" + existValue).style.backgroundColor = LightenDarkenColor(selfProfileObj.color, 50);
 
     document.getElementById("tagValueOverlay").style.left = `${mousePosition.x + 20}px`;
     document.getElementById("tagValueOverlay").style.top = `${mousePosition.y - 45}px`;
@@ -337,11 +333,8 @@ function ClosetagValueOverlay()
 
 function SetInterestValue(tagName, endValue)
 {
-    let profile = JSON.parse(selfProfile);
+    selfProfileObj.tags[IndexOfTag(tagName)][1] = endValue;
 
-    profile.tags[IndexOfTag(tagName)][1] = endValue;
-
-    selfProfile = JSON.stringify(profile);
     AddTagsToContainer(profile);
     ClosetagValueOverlay();
 }

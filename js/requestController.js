@@ -1,4 +1,4 @@
-async function SendRequest(type, url, data)
+async function SendRequest(type, url, data = null, token = '')
 {    
     Blocker.Show();
     let result;
@@ -11,7 +11,8 @@ async function SendRequest(type, url, data)
         async: true,
         headers: { 
             'Access-Control-Allow-Origin': 'http://127.0.0.1:5500',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         },
         success:function(serverData)
         {

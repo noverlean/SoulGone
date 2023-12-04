@@ -240,14 +240,3 @@ button
     top: calc(50% - 25px);
     left: calc(50% - 75px);
 }
-
-.blocker
-{
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.685);
-    z-index: 10;
-}

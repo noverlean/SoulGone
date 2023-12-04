@@ -58,7 +58,6 @@ function MakeChoice(choice)
     }, 2000);
 }
 
-ShowNextCard(content);
 function ShowNextCard(json, choice)
 {
     document.getElementById('like').insertAdjacentHTML(
@@ -268,7 +267,8 @@ function LoadImages(profile)
 
 function AddTagsToContainer(profile)
 {
-    let isMe = profile.id == JSON.parse(selfProfile).id;
+    console.log(selfProfileObj.username);
+    let isMe = profile.username == selfProfileObj.username;
     let tagsSide = isMe ? "leftTags" : "rightTags";
 
     document.querySelectorAll('.intoTagContainer').forEach(element => element.remove());
