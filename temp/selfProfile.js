@@ -1,6 +1,6 @@
 var selfProfile = 
 `{
-    "id": 123,
+    "username": 123,
     "avatar": "resources/images/avatar.png",
     "name": "Евгений",
     "age": 18,
@@ -25,4 +25,20 @@ var selfProfile =
     "color": "#5820be"
 }`;
 
-var selfProfileObj;
+var selfProfileObj = 
+{
+    username: null,
+    avatar: null,
+    name: null,
+    age: null,
+    distance: null,
+    status: null,
+    description: null,
+    images: [],
+    tags: [],
+    instagram: null,
+    telegram: null,
+    vk: null,
+    twitter: null,
+    color: null
+};

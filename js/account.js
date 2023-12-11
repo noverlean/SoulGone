@@ -7,6 +7,7 @@ let telegramInputDone = true;
 let vkInputDone = true;
 let twitterInputDone = true;
 
+let previousSelfProfileObj;
 function OpenAccount()
 {
     if (!choicerIsAvailable)
@@ -17,6 +18,8 @@ function OpenAccount()
 
     if (state)
     {
+        console.log("1");
+        previousSelfProfileObj = JSON.stringify(selfProfileObj);
         document.getElementById('accountOpenCloseFiller').style.animation = "showMyProfileBtn 1s cubic-bezier(.53,.03,.29,.91)";
         document.getElementById('accountOpenCloseFiller').style.height = '100%';
 
@@ -37,6 +40,11 @@ function OpenAccount()
     }
     else
     {        
+        console.log("2");
+        if (previousSelfProfileObj != JSON.stringify(selfProfileObj))
+        {
+            UploadChangedProfile(selfProfileObj);
+        }
         document.getElementById('accountOpenCloseFiller').style.animation = "showMyProfileBtnReversed 1s cubic-bezier(.53,.03,.29,.91)";
         document.getElementById('accountOpenCloseFiller').style.height = '0%';
 

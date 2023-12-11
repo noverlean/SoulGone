@@ -78,7 +78,7 @@ main
     width: 170px;
     height: 170px;
     border-radius: 85px;
-    background-image: url('../resources/images/avatar.png');
+    background-image: url('../resources/icons/loadAvatarImage.png');
     background-size: cover;
     margin: 25px;
     margin-bottom: 10px;
@@ -405,11 +405,40 @@ textarea
     border-radius: 10px;
     background-image: url('../resources/icons/loadImage.png');
     background-color: var(--gray);
-    background-size: 50%;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
     cursor: pointer;
 }
+
+.imageEditInputCleaner {
+    position: relative;
+  }
+  
+  .imageEditInputCleaner:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .imageEditInputCleaner:hover::after {
+    content: '×';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .imageEditInputCleaner:hover::after:hover {
+    color: #f00;
+  }
 
 .linkEdit
 {
@@ -521,7 +550,7 @@ textarea
     flex-direction: column;
     position: absolute;
     align-items: center;
-    height: 100px;
+    height: 150px;
     background-color: white;
     border-radius: 10px;
     overflow-y: scroll;

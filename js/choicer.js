@@ -38,17 +38,18 @@ function MakeChoice(choice)
 
         document.getElementById('profileCard').style.removeProperty('animation');
         if (choice)
-    {
-        document.getElementById('profileCard').style.animation = "cardOutLikeAnimation 1s cubic-bezier(.53,.03,.29,.91)";
-    }
-    else
-    {
-        document.getElementById('profileCard').style.animation = "cardOutCrossAnimation 1s cubic-bezier(.53,.03,.29,.91)";
-    }
+        {
+            document.getElementById('profileCard').style.animation = "cardOutLikeAnimation 1s cubic-bezier(.53,.03,.29,.91)";
+        }
+        else
+        {
+            document.getElementById('profileCard').style.animation = "cardOutCrossAnimation 1s cubic-bezier(.53,.03,.29,.91)";
+        }
         document.getElementById('profileCard').id = "OLD_CARD";
         document.getElementById('profileCardFiller').id = "OLD_FILLER";
 
-        ShowNextCard(content, choice);
+        ShowNextCard(JSON.parse(content), choice);
+        console.log(JSON.parse(content));
     }, 1000);
 
     setTimeout(()=>
@@ -58,7 +59,7 @@ function MakeChoice(choice)
     }, 2000);
 }
 
-function ShowNextCard(json, choice)
+function ShowNextCard(profile, choice)
 {
     document.getElementById('like').insertAdjacentHTML(
         'beforebegin',
@@ -74,10 +75,10 @@ function ShowNextCard(json, choice)
         document.getElementById('profileCard').style.animation = "cardInCrossAnimation 1s cubic-bezier(.53,.03,.29,.91)";
     }
     
-    setTimeout(ParseAndFillCard(json), 1000);
+    setTimeout(ParseAndFillCard(profile), 1000);
 }
 
-function ParseAndFillCard(json)
+function ParseAndFillCard(profile)
 {
     document.getElementById('profileCard').insertAdjacentHTML(
         'afterbegin',
@@ -97,16 +98,14 @@ function ParseAndFillCard(json)
     document.getElementById('profileCardFiller').style.removeProperty('animation');
     document.getElementById('profileCardFiller').style.animation = "fillCardForLikeIn 1s cubic-bezier(.53,.03,.29,.91)";
 
-    FillContent(json);
+    FillContent(profile);
 }
 
-function FillContent(json)
+function FillContent(profile)
 {
-    let profile = JSON.parse(json);
-
     [profile.age, profile.distance, profile.status] = GetPreficses(profile);
 
-    document.getElementById('avatar').style.backgroundImage = "url('" + profile.avatar + "')";
+    document.getElementById('avatar').style.backgroundImage = "url('" + profile.avatar != null ? profile.avatar : "../resources/icons/loadImage.png" + "')";
     document.getElementById('name').innerHTML               = profile.name;
     document.getElementById('age').innerHTML                = profile.age;
     document.getElementById('distance').innerHTML           = profile.distance;
@@ -131,25 +130,24 @@ function FillContent(json)
 
 function GetPreficses(profile)
 {
-    let age, distance, status;
+    let age;
+    let isNotMe = profile.username != selfProfileObj.username;
 
-    if (profile.age % 10 >= 2 && profile.age % 10 <= 4)
-        age = profile.age + " год";
-    else if (profile.age % 10 == 1)
-        age = profile.age + " года";
+    if (isNotMe)
+    {
+        if (profile.age % 10 >= 2 && profile.age % 10 <= 4)
+            age = profile.age + " год";
+        else if (profile.age % 10 == 1)
+            age = profile.age + " года";
+        else
+            age = profile.age + " лет";
+    }
     else
-        age = profile.age + " лет";
+    {
+        age = profile.age;
+    }
 
-    if (profile.distance > 10000)
-        distance = "более 10 км";
-    else if (profile.distance < 1000)
-        distance = "менее 1 км";
-    else
-        distance = "около " + Math.round(profile.distance / 1000) + " км";
-
-    status = profile.status ? "online" : "offline";
-
-    return [age, distance, status];
+    return [age, profile.distance, profile.status];
 }
 
 function GetPhotoClassName(images)
@@ -157,7 +155,7 @@ function GetPhotoClassName(images)
     switch(images.length)
     {
         case 1:
-            return "onePhotoGrid";
+            return "onePhotosGrid";
         case 2:
             return "twoPhotosGrid";
         case 3:
@@ -247,6 +245,18 @@ function LightenDarkenColor(col, amt) {
 
 function LoadImages(profile)
 {
+    try
+    {
+        document.getElementById('images').classList.remove('onePhotosGrid');
+        document.getElementById('images').classList.remove('twoPhotosGrid');
+        document.getElementById('images').classList.remove('threePhotosGrid');
+        document.getElementById('images').classList.remove('fourPhotosGrid');
+    }
+    catch(e)
+    {
+
+    }
+    document.getElementById('images').innerHTML = '';
     document.getElementById('images').classList.add(GetPhotoClassName(profile.images));
 
     let counter = 0;
@@ -260,14 +270,35 @@ function LoadImages(profile)
                 `<div class="photo photo${counter}" id="${element + counter}"></div>`
             );
         }
+        
+        const img = new Image();
+        img.onload = LoadBase64Image(img, [document.getElementById(element + counter)])
+        console.log(element);
+        img.src = element;
 
-        document.getElementById(element + counter).style.backgroundImage = "url('" + element + "')";
+        // loadBase64Image(element, [document.getElementById(element + counter)], true);
+        
+        // document.getElementById(element + counter).style.backgroundImage = "url('" + element + "')";
     });
+}
+
+function LoadBase64Image(img, targetElements)
+{
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const dataURL = canvas.toDataURL();
+    targetElements.forEach(element => 
+        element.style.backgroundImage = `url(${dataURL})`
+    );
 }
 
 function AddTagsToContainer(profile)
 {
-    console.log(selfProfileObj.username);
     let isMe = profile.username == selfProfileObj.username;
     let tagsSide = isMe ? "leftTags" : "rightTags";
 
@@ -278,12 +309,12 @@ function AddTagsToContainer(profile)
         let clickEventString = '';
         if (isMe)
         {
-            clickEventString = ` onclick="OpenInterestValueSetter('${profile.tags[i][0]}', ${profile.tags[i][1]})"`;
+            clickEventString = ` onclick="OpenInterestValueSetter('${profile.tags[i].short_name}', ${profile.tags[i].value})"`;
         }
 
         document.getElementById(tagsSide).insertAdjacentHTML(
             `afterbegin`,
-            `<div class="tag intoTagContainer"${clickEventString}>${profile.tags[i][0]} | ${profile.tags[i][1]}</div>`
+            `<div class="tag intoTagContainer"${clickEventString}>${profile.tags[i].name} | ${profile.tags[i].value}</div>`
         );
     }
 }

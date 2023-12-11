@@ -34,17 +34,93 @@ linkEditTelegramInput.addEventListener( 'focus',    () => ChangeInputColor(linkE
 linkEditVKInput.addEventListener(       'focus',    () => ChangeInputColor(linkEditVKInput,         'changing'));
 linkEditTwitterInput.addEventListener(  'focus',    () => ChangeInputColor(linkEditTwitterInput,    'changing'));
 
-function readURL(input) {
+async function readAvatarURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            document.querySelectorAll('[id=avatar]').forEach(element => {
-                element.style.backgroundImage = "url(" + e.target.result + ")";
-            });
-            document.getElementById('bunner').style.backgroundImage = "url(" + e.target.result + ")";
-        };
-        reader.readAsDataURL(input.files[0]);
+        resizeImageAndHandle(input.files[0], input.clientWidth, (value) => { selfProfileObj.avatar = value }, [
+            document.getElementsByClassName('avatar')[0], 
+            document.getElementsByClassName('avatar')[1], 
+            document.getElementsByClassName('bunner')[0]
+        ]);
     }
+}
+
+function readPhotoURL(input, id) {
+    if (input.files && input.files[0]) {
+        if (selfProfileObj.images.length < id)
+        {
+            selfProfileObj.images.push("");
+        }
+
+        let targetElements;
+        let targetFieldLoader;
+        if (selfProfileObj.images.length < id)
+        {
+            targetElements = [document.getElementById(`imageEditInput${selfProfileObj.images.length}`)];
+            targetFieldLoader = (value) => { selfProfileObj.images[selfProfileObj.images.length-1] = value };
+        }
+        else
+        {
+            targetElements = [input];
+            targetFieldLoader = (value) => { selfProfileObj.images[id-1] = value };
+        }
+
+        resizeImageAndHandle(input.files[0], 200, targetFieldLoader, targetElements, false);
+    }
+}
+
+function loadBase64Image(imageStr, targetElements, isPhoto)
+{
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.width;
+        canvas.height = this.height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(this, 0, 0);
+
+        const dataURL = canvas.toDataURL();
+        targetElements.forEach(element => 
+            element.style.backgroundImage = `url(${dataURL})`
+        );
+        if (isPhoto)
+        {
+            console.log(selfProfileObj);
+
+            LoadImages(selfProfileObj);
+        }
+    };
+    img.src = imageStr;
+}
+
+function resizeImageAndHandle(file, minSize, targetFieldLoader, targetElements, keepWidth = true) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            if (keepWidth)
+            {
+                scaleFactor = minSize / img.width;
+                canvas.width = minSize;
+                canvas.height = img.height * scaleFactor;
+            }
+            else
+            {
+                scaleFactor = minSize / img.height;
+                canvas.width = img.width * scaleFactor;
+                canvas.height = minSize;
+            }
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL();
+            targetFieldLoader(dataURL);
+            loadBase64Image(dataURL, targetElements, !keepWidth);
+        };
+    };
 }
 
 function EditAccountInput(fromId, toId, isLink)
@@ -90,6 +166,19 @@ function EditAccountInput(fromId, toId, isLink)
     else
     {
         to.innerHTML = from.value;
+
+        switch (toId)
+        {
+            case "name":
+                selfProfileObj.name = from.value;
+                break;
+            case "age":
+                selfProfileObj.age = from.value;
+                break;
+            case "description":
+                selfProfileObj.description = from.value;
+                break;
+        }
     }
 }
 
@@ -117,15 +206,19 @@ function LinkAcceptance(id)
     {
         case 'linkEditInstagram':
             instagramInputDone = validationResult;
+            selfProfileObj.instagram = validationResult ? url : "";
             break;
         case 'linkEditTelegram':
             telegramInputDone = validationResult;
+            selfProfileObj.telegram = validationResult ? url : "";
             break;
         case 'linkEditVK':
             vkInputDone = validationResult;
+            selfProfileObj.vk = validationResult ? url : "";
             break;
         case 'linkEditTwitter':
             twitterInputDone = validationResult;
+            selfProfileObj.twitter = validationResult ? url : "";
             break;
     }
 }
@@ -227,13 +320,13 @@ function SearchTag()
 
                 document.getElementById('tagAddListContainer').insertAdjacentHTML(
                     `beforeend`,
-                    `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tags[k]}')">${tags[i].tags[k]}</div>`
+                    `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tagShortnames[k]}')">${tags[i].tags[k]}</div>`
                 );
             }
         }
     } 
 }
-
+console.log(tags);
 function FillTagAddPanel()
 {
     document.getElementById('tagAddListContainer').innerHTML = "";
@@ -250,30 +343,31 @@ function FillTagAddPanel()
                 `<div class="tagAddListSlicer"></div>`
             );
 
-        for (let k = 0; k < tags[i].tags.length; k++)
+        for (let k = 0; k < tags[i].tagShortnames.length; k++)
         {
             let myTagStyle = '';            
 
-            if (IndexOfTag(tags[i].tags[k]) != -1)
+            if (IndexOfTag(tags[i].tagShortnames[k]) != -1)
             {
                 myTagStyle = `style="background-color: ${LightenDarkenColor(selfProfileObj.color, 50)} !important;"`;
             }
 
             document.getElementById(tags[i].category).insertAdjacentHTML(
                 `beforeend`,
-                `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tags[k]}')">${tags[i].tags[k]}</div>`
+                `<div class="tag" ${myTagStyle} onclick="AddAndRemoveTagToMyTags('${tags[i].tagShortnames[k]}')">${tags[i].tags[k]}</div>`
             );
         }
     }    
 }
 
-function AddAndRemoveTagToMyTags(tagName)
+function AddAndRemoveTagToMyTags(tagShortname)
 {
-    let index = IndexOfTag(tagName);
+    let index = IndexOfTag(tagShortname);
 
     if (index == -1)
     {
-        selfProfileObj.tags.push([tagName, 5]);
+        selfProfileObj.tags.push({category:GetTagCategoryByShortname(tagShortname), name:GetTagNameByShortname(tagShortname), short_name:tagShortname, value:5});
+        // selfProfileObj.tags.push([tagShortname, 5]);
     }
     else
     {
@@ -284,13 +378,13 @@ function AddAndRemoveTagToMyTags(tagName)
     AddTagsToContainer(selfProfileObj);
 }
 
-function IndexOfTag(tagName)
+function IndexOfTag(tagShortname)
 {
     let index = -1;
 
     for (let i = 0; i < selfProfileObj.tags.length; i++)
     {
-        if (selfProfileObj.tags[i][0] == tagName)
+        if (selfProfileObj.tags[i].short_name == tagShortname)
         {
             index = i;
             break;
@@ -300,22 +394,22 @@ function IndexOfTag(tagName)
     return index;
 }
 
-function OpenInterestValueSetter(tagName, existValue)
+function OpenInterestValueSetter(tagShortname, existValue)
 {
     document.body.insertAdjacentHTML(
         `beforeend`,
         `<div id="tagValueOverlayBackground" class="tagValueOverlayBackground" onclick="ClosetagValueOverlay()">
             <div id="tagValueOverlay" class="tagValueOverlay" onclick="event.stopPropagation()">
-                <div id="tagValues10" class="tagValues" onclick="SetInterestValue('${tagName}', 10)">10</div>
-                <div id="tagValues9" class="tagValues" onclick="SetInterestValue('${tagName}', 9)">9</div>
-                <div id="tagValues8" class="tagValues" onclick="SetInterestValue('${tagName}', 8)">8</div>
-                <div id="tagValues7" class="tagValues" onclick="SetInterestValue('${tagName}', 7)">7</div>
-                <div id="tagValues6" class="tagValues" onclick="SetInterestValue('${tagName}', 6)">6</div>
-                <div id="tagValues5" class="tagValues" onclick="SetInterestValue('${tagName}', 5)">5</div>
-                <div id="tagValues4" class="tagValues" onclick="SetInterestValue('${tagName}', 4)">4</div>
-                <div id="tagValues3" class="tagValues" onclick="SetInterestValue('${tagName}', 3)">3</div>
-                <div id="tagValues2" class="tagValues" onclick="SetInterestValue('${tagName}', 2)">2</div>
-                <div id="tagValues1" class="tagValues" onclick="SetInterestValue('${tagName}', 1)">1</div>
+                <div id="tagValues10" class="tagValues" onclick="SetInterestValue('${tagShortname}', 10)">10</div>
+                <div id="tagValues9" class="tagValues" onclick="SetInterestValue('${tagShortname}', 9)">9</div>
+                <div id="tagValues8" class="tagValues" onclick="SetInterestValue('${tagShortname}', 8)">8</div>
+                <div id="tagValues7" class="tagValues" onclick="SetInterestValue('${tagShortname}', 7)">7</div>
+                <div id="tagValues6" class="tagValues" onclick="SetInterestValue('${tagShortname}', 6)">6</div>
+                <div id="tagValues5" class="tagValues" onclick="SetInterestValue('${tagShortname}', 5)">5</div>
+                <div id="tagValues4" class="tagValues" onclick="SetInterestValue('${tagShortname}', 4)">4</div>
+                <div id="tagValues3" class="tagValues" onclick="SetInterestValue('${tagShortname}', 3)">3</div>
+                <div id="tagValues2" class="tagValues" onclick="SetInterestValue('${tagShortname}', 2)">2</div>
+                <div id="tagValues1" class="tagValues" onclick="SetInterestValue('${tagShortname}', 1)">1</div>
             </div>
         </div>`
     );
@@ -326,15 +420,45 @@ function OpenInterestValueSetter(tagName, existValue)
     document.getElementById("tagValueOverlay").style.top = `${mousePosition.y - 45}px`;
 }
 
+function GetTagNameByShortname(tagShortname)
+{
+    let result;
+    tags.forEach(category => {
+        for (let i = 0; i < category.tagShortnames.length; i++)
+        {
+            if (category.tagShortnames[i] == tagShortname)
+            {
+                result = category.tags[i];
+            }
+        }
+    });
+    return result;
+}
+
+function GetTagCategoryByShortname(tagShortname)
+{
+    let result;
+    tags.forEach(category => {
+        for (let i = 0; i < category.tagShortnames.length; i++)
+        {
+            if (category.tagShortnames[i] == tagShortname)
+            {
+                result = category.category;
+            }
+        }
+    });
+    return result;
+}
+
 function ClosetagValueOverlay()
 {
     document.getElementById('tagValueOverlayBackground').remove();
 }
 
-function SetInterestValue(tagName, endValue)
+function SetInterestValue(tagShortname, endValue)
 {
-    selfProfileObj.tags[IndexOfTag(tagName)][1] = endValue;
+    selfProfileObj.tags[IndexOfTag(tagShortname)].value = endValue;
 
-    AddTagsToContainer(profile);
+    AddTagsToContainer(selfProfileObj);
     ClosetagValueOverlay();
 }

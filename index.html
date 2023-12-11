@@ -23,7 +23,7 @@
 </head>
 <body>
     <main id="main">
-        <div id='messagePanel' class="messagePanel" onclick="document.getElementById('messagePanel').style.display = 'none';">
+        <div id='messagePanel' class="messagePanel">
             <div id='message' class="message"  onclick="event.stopPropagation()">
               Сообщение
             </div>
@@ -79,7 +79,7 @@
         <div class="rightBar" id="rightBar">
             <div class="defaultBarContainer avatarLoader" id="avatarLoader">
                 <div class="avatar" id="avatar">
-                    <input type="file" class="avatarLoaderInput" onchange="readURL(this);" accept=".jpeg, .png">
+                    <input type="file" class="avatarLoaderInput" onchange="readAvatarURL(this);" accept=".jpeg, .png">
                 </div>
             </div>
             <div class="defaultBarContainer nameEdit" id="nameEdit">
@@ -90,22 +90,22 @@
                     <input type="text" class="nameEditInput" id="ageEditInput" maxlength="2" minlength="1">
                 </div>
                 <div class="defaultBarContainer descriptionEditContainer" id="descriptionEdit">
-                    <textarea  type="text" class="nameEditInput" id="descriptionEditInput" maxlength="24" minlength="1" cols="12"></textarea>
+                    <textarea  type="text" placeholder="Описание" class="nameEditInput" id="descriptionEditInput" maxlength="24" minlength="1" cols="12"></textarea>
                 </div>
             </div>
         
             <div class="defaultBarContainer imageEdit" id="imageEdit">
-                <input type="file" class="imageEditInput" id="imageEditInput1">
-                <input type="file" class="imageEditInput" id="imageEditInput2">
-                <input type="file" class="imageEditInput" id="imageEditInput3">
-                <input type="file" class="imageEditInput" id="imageEditInput4">
+                <input type="file" class="imageEditInput" id="imageEditInput1" onchange="readPhotoURL(this, 1);" accept=".jpeg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput2" onchange="readPhotoURL(this, 2);" accept=".jpeg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput3" onchange="readPhotoURL(this, 3);" accept=".jpeg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput4" onchange="readPhotoURL(this, 4);" accept=".jpeg, .png">
             </div>
 
             <div class="defaultBarContainer linkEdit" id="linkEdit">
-                <div><img src="resources/icons/instagram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditInstagram" minlength="1"></div>
-                <div><img src="resources/icons/telegram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTelegram" minlength="1"></div>
-                <div><img src="resources/icons/vk.svg" alt=""><input type="text" class="linkEditInput" id="linkEditVK" minlength="1"></div>
-                <div><img src="resources/icons/twitter.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTwitter" minlength="1"></div>
+                <div><img src="resources/icons/instagram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditInstagram" minlength="1"  autocomplete="off"></div>
+                <div><img src="resources/icons/telegram.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTelegram" minlength="1"  autocomplete="off"></div>
+                <div><img src="resources/icons/vk.svg" alt=""><input type="text" class="linkEditInput" id="linkEditVK" minlength="1"  autocomplete="off"></div>
+                <div><img src="resources/icons/twitter.svg" alt=""><input type="text" class="linkEditInput" id="linkEditTwitter" minlength="1"  autocomplete="off"></div>
             </div>
 
             <div class="defaultBarContainer tags" id="rightTags"></div>
