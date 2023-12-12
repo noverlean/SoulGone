@@ -18,7 +18,8 @@ function OpenAccount()
 
     if (state)
     {
-        console.log("1");
+        profileWasChanged = false;
+
         previousSelfProfileObj = JSON.stringify(selfProfileObj);
         document.getElementById('accountOpenCloseFiller').style.animation = "showMyProfileBtn 1s cubic-bezier(.53,.03,.29,.91)";
         document.getElementById('accountOpenCloseFiller').style.height = '100%';
@@ -40,7 +41,6 @@ function OpenAccount()
     }
     else
     {        
-        console.log("2");
         if (previousSelfProfileObj != JSON.stringify(selfProfileObj))
         {
             UploadChangedProfile(selfProfileObj);
@@ -117,7 +117,7 @@ function FillAccountEditorPanels(profile)
     {
         if (profile.images[i] != undefined)
         {
-            document.getElementById('imageEditInput' + (i + 1)).style.backgroundImage = 'url(' + profile.images[i] +' )';
+            document.getElementById('imageEditInput' + (i + 1)).style.backgroundImage = 'url(' + (profile.images[i] != "" ? profile.images[i] : `"resources/icons/loadImage.png"`) +' )';
             document.getElementById('imageEditInput' + (i + 1)).style.backgroundSize = "cover";
         }
     }    

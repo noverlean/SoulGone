@@ -34,6 +34,18 @@ linkEditTelegramInput.addEventListener( 'focus',    () => ChangeInputColor(linkE
 linkEditVKInput.addEventListener(       'focus',    () => ChangeInputColor(linkEditVKInput,         'changing'));
 linkEditTwitterInput.addEventListener(  'focus',    () => ChangeInputColor(linkEditTwitterInput,    'changing'));
 
+var profileWasChanged = false;
+
+function ClearAllPhotos()
+{
+    for (let i = 0; i < 4; i++)
+    {
+        selfProfileObj.images[i] = "";
+        document.getElementById("imageEditInput" + (i+1)).style.backgroundImage = `url('resources/icons/loadImage.png')`
+    }
+    LoadImages(selfProfileObj);
+}
+
 async function readAvatarURL(input) {
     if (input.files && input.files[0]) {
         resizeImageAndHandle(input.files[0], input.clientWidth, (value) => { selfProfileObj.avatar = value }, [
@@ -85,8 +97,6 @@ function loadBase64Image(imageStr, targetElements, isPhoto)
         );
         if (isPhoto)
         {
-            console.log(selfProfileObj);
-
             LoadImages(selfProfileObj);
         }
     };
@@ -326,7 +336,7 @@ function SearchTag()
         }
     } 
 }
-console.log(tags);
+
 function FillTagAddPanel()
 {
     document.getElementById('tagAddListContainer').innerHTML = "";

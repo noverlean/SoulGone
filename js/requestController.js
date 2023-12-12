@@ -64,7 +64,6 @@ function UploadChangedProfile(RAWprofile)
 
     let profile =
     {
-        username: RAWprofile.username,
         avatar_url: RAWprofile.avatar,
         name: RAWprofile.name,
         age: RAWprofile.age,
@@ -98,6 +97,7 @@ function UploadChangedProfile(RAWprofile)
             console.log(serverData);
 
             result = serverData;
+            profileWasChanged = true;
         },
         error: function(e)
         {

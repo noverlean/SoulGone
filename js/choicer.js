@@ -49,7 +49,6 @@ function MakeChoice(choice)
         document.getElementById('profileCardFiller').id = "OLD_FILLER";
 
         ShowNextCard(JSON.parse(content), choice);
-        console.log(JSON.parse(content));
     }, 1000);
 
     setTimeout(()=>
@@ -152,7 +151,14 @@ function GetPreficses(profile)
 
 function GetPhotoClassName(images)
 {
-    switch(images.length)
+    let length = 0;
+    for (let i = 0; i < 4; i++)
+    {
+        if (images[i] != "")
+            length++;
+    }
+
+    switch(length)
     {
         case 1:
             return "onePhotosGrid";
@@ -245,6 +251,14 @@ function LightenDarkenColor(col, amt) {
 
 function LoadImages(profile)
 {
+    [
+        document.getElementsByClassName('avatar')[0], 
+        document.getElementsByClassName('avatar')[1], 
+        document.getElementsByClassName('bunner')[0]
+    ].forEach(element => {
+        element.style.backgroundImage = "url(" + profile.avatar + ")";
+    });
+    
     try
     {
         document.getElementById('images').classList.remove('onePhotosGrid');
@@ -260,41 +274,19 @@ function LoadImages(profile)
     document.getElementById('images').classList.add(GetPhotoClassName(profile.images));
 
     let counter = 0;
-    profile.images.forEach(element => {
+    profile.images.forEach(img => {
         counter++;
 
-        if (element != "")
+        if (img != "")
         {
             document.getElementById('images').insertAdjacentHTML(
                 `beforeend`,
-                `<div class="photo photo${counter}" id="${element + counter}"></div>`
+                `<div class="photo photo${counter}" id="${img + counter}"></div>`
             );
+
+            document.getElementById(img + counter).style.backgroundImage = `url(${img})`
         }
-        
-        const img = new Image();
-        img.onload = LoadBase64Image(img, [document.getElementById(element + counter)])
-        console.log(element);
-        img.src = element;
-
-        // loadBase64Image(element, [document.getElementById(element + counter)], true);
-        
-        // document.getElementById(element + counter).style.backgroundImage = "url('" + element + "')";
     });
-}
-
-function LoadBase64Image(img, targetElements)
-{
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-
-    const dataURL = canvas.toDataURL();
-    targetElements.forEach(element => 
-        element.style.backgroundImage = `url(${dataURL})`
-    );
 }
 
 function AddTagsToContainer(profile)
