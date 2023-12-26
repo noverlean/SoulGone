@@ -35,6 +35,7 @@ function OpenAccount()
             VerticalScaleAnimation("avatarLoader", 0, 1);
             VerticalScaleAnimation("nameEdit", 0, 1);
             VerticalScaleAnimation("ageDescriptionEdit", 0, 1);
+            VerticalScaleAnimation("ageDescriptionEdit1", 0, 1);
             VerticalScaleAnimation("imageEdit", 0, 1);
             VerticalScaleAnimation("linkEdit", 0, 1);
         }, 500);
@@ -54,6 +55,7 @@ function OpenAccount()
         VerticalScaleAnimation("avatarLoader", 1, 0);
         VerticalScaleAnimation("nameEdit", 1, 0);
         VerticalScaleAnimation("ageDescriptionEdit", 1, 0);
+        VerticalScaleAnimation("ageDescriptionEdit1", 1, 0);
         VerticalScaleAnimation("imageEdit", 1, 0);
         VerticalScaleAnimation("linkEdit", 1, 0);
 
@@ -68,7 +70,7 @@ function OpenAccount()
         if (state)
             FillContent(selfProfileObj);
         else            
-            FillContent(content);
+            FillContent(ProfileShowList.current);
     }, 500);
 
     setTimeout(()=>{

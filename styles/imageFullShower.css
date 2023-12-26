@@ -1,0 +1,23 @@
+.imageFullShower
+{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000077;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    scale: 1.2;
+    visibility: hidden;
+}
+
+.imageFullShower img
+{
+    border-radius: 15px;
+}
+
+.fullShowerAbility
+{
+    z-index: 299;
+}

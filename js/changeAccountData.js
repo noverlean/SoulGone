@@ -76,7 +76,7 @@ function readPhotoURL(input, id) {
             targetFieldLoader = (value) => { selfProfileObj.images[id-1] = value };
         }
 
-        resizeImageAndHandle(input.files[0], 200, targetFieldLoader, targetElements, false);
+        resizeImageAndHandle(input.files[0], 300, targetFieldLoader, targetElements, false);
     }
 }
 
@@ -131,6 +131,17 @@ function resizeImageAndHandle(file, minSize, targetFieldLoader, targetElements, 
             loadBase64Image(dataURL, targetElements, !keepWidth);
         };
     };
+}
+
+function ChangeProfileColor(input)
+{
+    selfProfileObj.color = input.value;
+
+    ColorizeByTag("accountOpenCloseFiller", selfProfileObj.color);
+    ColorizeByTag("main", selfProfileObj.color);
+    ColorizeByTag("profileCardFiller", LightenDarkenColor(selfProfileObj.color, -40));
+    ColorizeAllBordersByTag("tag", LightenDarkenColor(selfProfileObj.color, -40));
+    ColorizeByTag("addTag", LightenDarkenColor(selfProfileObj.color, -40));
 }
 
 function EditAccountInput(fromId, toId, isLink)

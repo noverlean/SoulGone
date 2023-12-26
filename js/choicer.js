@@ -13,12 +13,25 @@ function Cross()
     MakeChoice(false);
 }
 
-function MakeChoice(choice)
+async function MakeChoice(choice)
 {
     if (!choicerIsAvailable)
         return;
 
     choicerIsAvailable = false;
+
+    if (ProfileShowList.current != null && ProfileShowList.current.username != "")
+    {
+        if (choice)
+        {
+            await SendRequest("POST", "http://localhost:8090/demo/profile/like", {"username": ProfileShowList.current.username}, Token.Get(), false);
+            // тут обработать возврат "ok" или "mutual" ответ и добавить его аватар на панель
+        }
+        else
+        {
+            await SendRequest("POST", "http://localhost:8090/demo/profile/ignore", {"username": ProfileShowList.current.username}, Token.Get(), false);
+        }
+    }
 
     document.getElementById('profileCardFiller').style.removeProperty('animation');
     document.getElementById('profileCardFiller').style.animation = "fillCardForLikeOut 2s cubic-bezier(.53,.03,.29,.91)";
@@ -48,7 +61,14 @@ function MakeChoice(choice)
         document.getElementById('profileCard').id = "OLD_CARD";
         document.getElementById('profileCardFiller').id = "OLD_FILLER";
 
-        ShowNextCard(JSON.parse(content), choice);
+        if (JSON.parse(emptyContent).description != "анкеты загружаются...")
+        {
+            ShowNextCard(ProfileShowList.Next(), choice);
+        }
+        else
+        {
+            ShowNextCard(JSON.parse(emptyContent), choice);
+        }
     }, 1000);
 
     setTimeout(()=>
@@ -81,7 +101,7 @@ function ParseAndFillCard(profile)
 {
     document.getElementById('profileCard').insertAdjacentHTML(
         'afterbegin',
-        `<div class="avatar" id="avatar"></div>
+        `<div class="avatar fullShowerAbility" id="avatar"></div>
             <div class="name" id="name"></div>
             <div class="subProfileData" id="subProfileData">
                 <div class="age" id="age"></div>
@@ -120,6 +140,7 @@ function FillContent(profile)
 
     AddTagsToContainer(profile);
 
+    document.getElementById('colorInput').value = profile.color;
     ColorizeByTag("accountOpenCloseFiller", profile.color);
     ColorizeByTag("main", profile.color);
     ColorizeByTag("profileCardFiller", LightenDarkenColor(profile.color, -40));
@@ -270,6 +291,7 @@ function LoadImages(profile)
     {
 
     }
+
     document.getElementById('images').innerHTML = '';
     document.getElementById('images').classList.add(GetPhotoClassName(profile.images));
 
@@ -281,7 +303,7 @@ function LoadImages(profile)
         {
             document.getElementById('images').insertAdjacentHTML(
                 `beforeend`,
-                `<div class="photo photo${counter}" id="${img + counter}"></div>`
+                `<div class="photo photo${counter} fullShowerAbility" id="${img + counter}"></div>`
             );
 
             document.getElementById(img + counter).style.backgroundImage = `url(${img})`
@@ -295,6 +317,17 @@ function AddTagsToContainer(profile)
     let tagsSide = isMe ? "leftTags" : "rightTags";
 
     document.querySelectorAll('.intoTagContainer').forEach(element => element.remove());
+
+    document.getElementById("rightTags").innerHTML = "";
+
+    if (profile.tags.length == 0)
+    {
+        document.getElementById("rightTags").innerHTML = "";
+        document.getElementById("rightTags").insertAdjacentHTML(
+            `afterbegin`,
+            `<div class="tag">Интересы не были добавлены</div>`
+        );
+    }
 
     for (let i = 0; i < profile.tags.length; i++)
     {

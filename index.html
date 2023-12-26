@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="styles/helpWindowOnHovering.css">
     <link rel="stylesheet" href="styles/message.css">
     <link rel="stylesheet" href="styles/fullBlocker.css">
+    <link rel="stylesheet" href="styles/bottomBar.css">
+    <link rel="stylesheet" href="styles/imageFullShower.css">
+    <link rel="stylesheet" href="styles/admin.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> 
     <!-- font-family: 'Nunito', sans-serif; -->
@@ -20,6 +23,7 @@
     <!-- font-family: 'Cormorant Infant', serif; -->
 
     <title>Document</title>
+    <link rel="icon" href="resources/icons/logo300.png">
 </head>
 <body>
     <main id="main">
@@ -59,6 +63,175 @@
         </div>
         <div class="bunner" id="bunner"><div class="newBanner" id="newBanner"></div></div>
 
+        <div class="adminPanelOpenBTN" id="adminPanelOpenBTN" style="visibility: hidden;" onclick="document.getElementById('adminPanel').style.visibility = 'visible'; GetAllUsersForAdmin();"></div>
+        <div class="adminPanel" id="adminPanel" onclick="document.getElementById('adminPanel').style.visibility = 'hidden'">
+            <div class="adminUsersPanel" id="adminUsersPanel" onclick="event.stopPropagation()"></div>
+            <div class="adminCurrentUserPanel" onclick="event.stopPropagation()">
+                <div class="currentUserId fullShowerAbility" style="width: 25px" id="currentUserId"></div>
+                <div style="display: flex; flex-direction: column; width: 120px;">
+                    <div class="currentUserUsername fullShowerAbility" id="currentUserUsername"></div>
+                    <div id="currentUserName"></div>
+                </div>
+                
+                <div style="width: 25px" id="currentUserAge"></div>
+                <div style="width: 250px" id="currentUserEmail"></div>
+                <div style="width: 50px" id="currentUserLastSessionTime"></div>
+                <div class="currentUserDownload" id="currentUserDownload" onclick="downloadUserProfile()"></div>
+                <div id="currentUserIsAdmin" onclick="setUserAsAdmin()"></div>
+                <div id="currentUserIsAvailable" onclick="setUserAsAvailable()"></div>
+            </div>
+
+            <script>
+                
+                async function Start()
+                {
+                    let isAdminStart = await SendRequest("GET", "http://localhost:8090/demo/checkrole", null, Token.Get(), true);
+                    console.log(isAdminStart.body[0]);
+                    if (isAdminStart.body[0] == 2)
+                    {
+                        document.getElementById('adminPanelOpenBTN').style.visibility = "visible";
+                    }
+                }               
+
+                var usersForAdminPanel = [];
+                async function GetAllUsersForAdmin()
+                {
+                    let serverData = await SendRequest("GET", "http://localhost:8090/demo/admin/users", null, Token.Get(), false);
+
+                    document.getElementById('adminUsersPanel').innerHTML = "";
+                    usersForAdminPanel = serverData;
+                    for (let i = 0; i < serverData.length; i++)
+                    {
+                        document.getElementById('adminUsersPanel').insertAdjacentHTML(
+                            `afterbegin`,
+                            `<div class="adminUserRecord" ${serverData[i].available ? '' : 'style="background-color: #6d6d6d;"'} onclick="SelectUserByAdmin(${i})">
+                                <div class="adminUserRecordId" id="adminUserRecordId">${serverData[i].id}</div>
+                                <div style="width: 150px">${serverData[i].username}</div>
+                                <div style="width: 200px">${serverData[i].name}</div>
+                                <div style="width: 25px">${serverData[i].age}</div>
+                                <div style="width: 120px">${serverData[i].lastSessionTime}</div>
+                                <div class="${serverData[i].isAdmin ? 'adminUserRecordAdmin' : 'adminUserRecordUser'}"></div>
+                            </div>`
+                        );
+                    }
+                }
+
+                let currentUserIndex = -1;
+                function SelectUserByAdmin(index)
+                {
+                    currentUserIndex = index;
+                    document.getElementById('currentUserId').innerHTML = usersForAdminPanel[index].id;
+                    document.getElementById('currentUserUsername').innerHTML = usersForAdminPanel[index].username;
+                    document.getElementById('currentUserName').innerHTML = usersForAdminPanel[index].name;
+                    document.getElementById('currentUserAge').innerHTML = usersForAdminPanel[index].age;
+                    document.getElementById('currentUserEmail').innerHTML = usersForAdminPanel[index].email;
+                    document.getElementById('currentUserLastSessionTime').innerHTML = usersForAdminPanel[index].lastSessionTime;
+                    try{
+                        document.getElementById('currentUserIsAdmin').classList.remove('adminUserRecordUser');
+                        document.getElementById('currentUserIsAdmin').classList.remove('adminUserRecordAdmin');
+                    }
+                    catch(e)
+                    {
+
+                    }
+                    document.getElementById('currentUserIsAdmin').classList.add(usersForAdminPanel[index].isAdmin ? 'adminUserRecordAdmin' : 'adminUserRecordUser');
+                    
+                    try{
+                        document.getElementById('currentUserIsAvailable').classList.remove('adminUserRecordAvailable');
+                        document.getElementById('currentUserIsAvailable').classList.remove('adminUserRecordUnavailable');
+                    }
+                    catch(e)
+                    {
+
+                    }
+                    document.getElementById('currentUserIsAvailable').classList.add(!usersForAdminPanel[index].available ? 'adminUserRecordAvailable' : 'adminUserRecordUnavailable');
+                }
+
+                async function setUserAsAdmin()
+                {
+                    let result = await SendRequest("POST", `http://localhost:8090/demo/admin/setas${usersForAdminPanel[currentUserIndex].isAdmin ? "user" : "admin"}`, {"username":usersForAdminPanel[currentUserIndex].username}, Token.Get(), false);
+                    console.log(result);
+                    if (result == "ok")
+                    {
+                        usersForAdminPanel[currentUserIndex].isAdmin = !usersForAdminPanel[currentUserIndex].isAdmin;
+
+                        try{
+                            document.getElementById('currentUserIsAdmin').classList.remove('adminUserRecordUser');
+                            document.getElementById('currentUserIsAdmin').classList.remove('adminUserRecordAdmin');
+                        }
+                        catch(e)
+                        {
+                        }
+                        document.getElementById('currentUserIsAdmin').classList.add(usersForAdminPanel[currentUserIndex].isAdmin ? 'adminUserRecordAdmin' : 'adminUserRecordUser');
+
+                        GetAllUsersForAdmin();
+                    }
+                }
+
+                async function setUserAsAvailable()
+                {
+                    let result = await SendRequest("POST", `http://localhost:8090/demo/admin/setas${usersForAdminPanel[currentUserIndex].available ? "unavailable" : "available"}`, {"username":usersForAdminPanel[currentUserIndex].username}, Token.Get(), false);
+                    console.log(result);
+                    if (result == "ok")
+                    {
+                        usersForAdminPanel[currentUserIndex].available = !usersForAdminPanel[currentUserIndex].available;
+
+                        try{
+                            document.getElementById('currentUserIsAvailable').classList.remove('adminUserRecordAvailable');
+                            document.getElementById('currentUserIsAvailable').classList.remove('adminUserRecordUnavailable');
+                        }
+                        catch(e)
+                        {
+                        }
+                        document.getElementById('currentUserIsAvailable').classList.add(usersForAdminPanel[currentUserIndex].available ? 'adminUserRecordAvailable' : 'adminUserRecordUnavailable');
+
+                        GetAllUsersForAdmin();
+                    }
+                }
+
+                async function downloadUserProfile()
+                {
+                    let profile = await SendRequest("POST", "http://localhost:8090/demo/profile/download", {"username":usersForAdminPanel[currentUserIndex].username}, Token.Get(), false);
+                    console.log(profile);
+                    downloadFile(usersForAdminPanel[currentUserIndex].username, JSON.stringify(profile));
+                }
+
+                function downloadFile(filename, text) {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                    element.setAttribute('download', filename);
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+                    element.click();
+                    document.body.removeChild(element);
+                }
+            </script>
+        </div>
+        
+        <div id="imageFullShower" class="imageFullShower"><img src="" alt="" id="fullShowerImg"></div>
+
+        <div class="bottomBar">
+            <div><img src="resources/icons/likeRed.png" alt=""></div>
+            <div class="bottomBarInner" id="mutualsPanel">
+                <div>Здесь будут пользователи, которые вас лайкнули в ответ</div>
+                <!-- <div class="mutualAvatar" id="mutualAvatar" onclick="OpenShortProfile()"><img class="" src="resources/icons/likeRed.png" alt=""></div> -->
+            </div>
+        </div>
+        
+        <div class="shortProfileSide" id="shortProfileSide">
+            <div class="shortProfileAvatar" id="shortProfileAvatar"></div>
+            <div class="shortProfileEmpty"></div>
+            <div class="shortProfileNameAge">
+                <div class="shortProfileName" id="shortProfileName"></div>
+                <div class="shortProfileAge" id="shortProfileAge"></div>
+            </div>
+            <div class="shortProfileEmpty"></div>
+            <div class="shortProfileNameAge">
+                <div class="shortProfileSocieties" id="shortProfileSocieties"></div>
+                <div class="shortProfileEmail" id="shortProfileEmail"></div>
+            </div>
+        </div>
+
         <div class="accountOpenCloseButton" id="accountOpenCloseButton">
             <div class="accountOpenCloseFiller" id="accountOpenCloseFiller"></div>
         </div>
@@ -79,12 +252,19 @@
         <div class="rightBar" id="rightBar">
             <div class="defaultBarContainer avatarLoader" id="avatarLoader">
                 <div class="avatar" id="avatar">
-                    <input type="file" class="avatarLoaderInput" onchange="readAvatarURL(this);" accept=".jpeg, .png">
+                    <input type="file" class="avatarLoaderInput fullShowerAbility" onchange="readAvatarURL(this);" accept=".jpeg, .jpg, .png">
                 </div>
             </div>
-            <div class="defaultBarContainer nameEdit" id="nameEdit">
-                <input type="text" class="nameEditInput" name="" id="nameEditInput" maxlength="12" minlength="2">
+
+            <div style="display: none; flex-direction: row;" id="ageDescriptionEdit1" class="ageDescriptionEdit">
+                <div class="defaultBarContainer nameEdit" id="nameEdit">
+                    <input type="text" class="nameEditInput" name="" id="nameEditInput" maxlength="12" minlength="2">
+                </div>
+                <div class="defaultBarContainer ageEditContainer" id="">
+                    <input type="color" class="nameEditInput" id="colorInput" maxlength="2" minlength="1" onchange="ChangeProfileColor(this)">
+                </div>
             </div>
+            
             <div style="display: none; flex-direction: row;" id="ageDescriptionEdit" class="ageDescriptionEdit">
                 <div class="defaultBarContainer ageEditContainer" id="ageEdit">
                     <input type="text" class="nameEditInput" id="ageEditInput" maxlength="2" minlength="1">
@@ -95,10 +275,10 @@
             </div>
         
             <div class="defaultBarContainer imageEdit" id="imageEdit">
-                <input type="file" class="imageEditInput" id="imageEditInput1" onchange="readPhotoURL(this, 1);" accept=".jpeg, .png">
-                <input type="file" class="imageEditInput" id="imageEditInput2" onchange="readPhotoURL(this, 2);" accept=".jpeg, .png">
-                <input type="file" class="imageEditInput" id="imageEditInput3" onchange="readPhotoURL(this, 3);" accept=".jpeg, .png">
-                <input type="file" class="imageEditInput" id="imageEditInput4" onchange="readPhotoURL(this, 4);" accept=".jpeg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput1" onchange="readPhotoURL(this, 1);" accept=".jpeg, .jpg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput2" onchange="readPhotoURL(this, 2);" accept=".jpeg, .jpg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput3" onchange="readPhotoURL(this, 3);" accept=".jpeg, .jpg, .png">
+                <input type="file" class="imageEditInput" id="imageEditInput4" onchange="readPhotoURL(this, 4);" accept=".jpeg, .jpg, .png">
                 <div class="clearAllPhotoButton" onclick="ClearAllPhotos()"></div>
             </div>
 
@@ -134,8 +314,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="js/message.js"></script>
     <script src="js/token/Token.js"></script>
+    <script src="js/token/ProfileShowList.js"></script>
     <script src="js/token/Blocker.js"></script>
 
+    <script src="js/imageFullShower.js"></script>
+    <script src="js/mutual.js"></script>
     <script src="js/mousePositionController.js"></script>
     <script src="js/requestController.js"></script>
     <script src="js/account.js"></script>

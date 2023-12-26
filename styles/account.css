@@ -71,6 +71,7 @@ main
     background-color: #5720be;
     position: absolute;
     bottom: 0px;
+    z-index: 301;
 }
 
 .avatar
@@ -185,11 +186,12 @@ main
     background-size: 75%;
     background-repeat: no-repeat;
     position: absolute;
-    top: calc(50% - 40px);
+    top: calc(50%);
     border: 0;
     padding: 0;
     color: white;
     border-radius: 15px;
+    z-index: 302;
 }
 
 .likeBtn
@@ -507,6 +509,7 @@ textarea
     justify-content: center;
     font-family: 'Nunito', sans-serif;    
     visibility: hidden;
+    z-index: 302;
 }
 
 .tagAddListContainer

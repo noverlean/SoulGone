@@ -1,23 +1,15 @@
-var content = 
+var emptyContent = 
 `{
-    "id": 255,
-    "avatar": "resources/images/123.jpg",
-    "name": "Настя",
-    "age": 19,
-    "distance": 2,
-    "status": false,
-    "description": "Крутая девушка)",
-    "images": 
-    [
-        "resources/images/12.jfif",
-        "resources/images/12345.jfif",
-        "resources/images/1324.jfif"
-    ],
-    "tags": 
-    [
-        ["Общение", "9"],
-        ["Животные", "3"]
-    ],
+    "id": -1,
+    "username": "",
+    "avatar": "resources/icons/logo.jpg",
+    "name": "SoulGone",
+    "age": 0,
+    "distance": 0,
+    "status": "online",
+    "description": "анкеты загружаются...",
+    "images": [],
+    "tags": [],
     "instagram": "",
     "telegram": "https://t.me/noverlin",
     "vk": "",

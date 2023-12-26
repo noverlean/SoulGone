@@ -1,6 +1,7 @@
-async function SendRequest(type, url, data = null, token = '')
+async function SendRequest(type, url, data = null, token = '', showBloker = true)
 {    
-    Blocker.Show();
+    if (showBloker)
+        Blocker.Show();
     let result;
 
     await $.ajax
@@ -17,13 +18,15 @@ async function SendRequest(type, url, data = null, token = '')
         success:function(serverData)
         {
             console.log(serverData);
-            Blocker.Close();
+            if (showBloker)
+                Blocker.Close();
 
             result = serverData;
         },
         error: function(e)
         {
-            Blocker.Close();
+            if (showBloker)
+                Blocker.Close();
 
             try{
                 if (e.responseJSON.status == 401 && location.pathname != "/register.html")
@@ -32,7 +35,14 @@ async function SendRequest(type, url, data = null, token = '')
                     location.href = "register.html";
                 }
 
-                ShowMessage(`${e.responseJSON.status}: ${e.responseJSON.message}`, true);
+                if (e.responseJSON.status == 403)
+                {
+                    ShowMessage("Кажется у вас нет прав на это действие! Попросите помощи админа или перезагрузитесь...", true);
+                }
+                else
+                {
+                    ShowMessage(`${e.responseJSON.status}: ${e.responseJSON.message}`, true);
+                }
             }
             catch (err) 
             {
@@ -59,7 +69,7 @@ function UploadChangedProfile(RAWprofile)
     let tagString = "";
     for (let i = 0; i < RAWprofile.tags.length; i++)
     {
-        tagString += RAWprofile.tags[i].short_name + RAWprofile.tags[i].value;
+        tagString += RAWprofile.tags[i].short_name + (RAWprofile.tags[i].value - 1);
     }
 
     let profile =
@@ -79,8 +89,6 @@ function UploadChangedProfile(RAWprofile)
         twitter_url: RAWprofile.twitter,
         color: RAWprofile.color
     }
-
-    console.log(JSON.stringify(profile));
 
     $.ajax
     ({
