@@ -133,6 +133,7 @@ function FillMutualsProfilePanel(mutuals)
 {
     mutualObjs = [];
     let mutualsPanel = document.getElementById("mutualsPanel");
+    mutualsPanel.innerHTML = "";
     for (let i = 0; i < mutuals.length; i++)
     {
         mutualObjs.push(mutuals[i]);

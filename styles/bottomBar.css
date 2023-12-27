@@ -39,6 +39,7 @@
 .mutualAvatar
 {
     height: 60px;
+    background-size: cover;
 }
 
 .shortProfileSide
@@ -67,7 +68,7 @@
     border-radius: 50%;
     height: 80px;
     width: 80px;
-    background-size: contain;
+    background-size: cover;
 }
 
 .shortProfileNameAge
