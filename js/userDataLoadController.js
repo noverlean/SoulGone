@@ -133,15 +133,18 @@ function FillMutualsProfilePanel(mutuals)
 {
     mutualObjs = [];
     let mutualsPanel = document.getElementById("mutualsPanel");
-    mutualsPanel.innerHTML = "";
-    for (let i = 0; i < mutuals.length; i++)
+    if (mutuals.length != 0)
     {
-        mutualObjs.push(mutuals[i]);
-        mutualsPanel.insertAdjacentHTML(
-            `afterbegin`,
-            `
-            <div class="mutualAvatar" id="mutualAvatar" onmouseover="OpenShortProfile(${i})"><img class="" src="${mutuals[i].avatar != null ? mutuals[i].avatar : '../resources/icons/loadImageCircul.png'}" alt=""></div>
-            `
-        );
-    }
+        mutualsPanel.innerHTML = "";
+        for (let i = 0; i < mutuals.length; i++)
+        {
+            mutualObjs.push(mutuals[i]);
+            mutualsPanel.insertAdjacentHTML(
+                `afterbegin`,
+                `
+                <div class="mutualAvatar" id="mutualAvatar" onmouseover="OpenShortProfile(${i})"><img class="" src="${mutuals[i].avatar != null ? mutuals[i].avatar : '../resources/icons/loadImageCircul.png'}" alt=""></div>
+                `
+            );
+        }
+    }    
 }

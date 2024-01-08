@@ -29,9 +29,14 @@ var ProfileShowList = {
         {
             let o = JSON.parse(emptyContent);
             o.description = "Анкеты закончились!";
-            return ProfileShowList.current = o;
+            ProfileShowList.current = o;
+            return ProfileShowList.current;
         }
 
         return ProfileShowList.current = ConvertProfileBackToFront(ProfileShowList.profilesObj.shift());
     }
 }
+
+let ob = JSON.parse(emptyContent);
+ob.description = "Анкеты закончились!";
+ProfileShowList.current = ob;
